@@ -33,6 +33,10 @@ namespace BludeltaWebApiTestClient
       // Get number of validatable invoices
       var validatbleInvoiceCount = GetValidatableInvoiceCount(config);
 
+      // Get number of importable invoices
+      var importableInvoiceCount = GetImportableInvoiceCount(config);
+
+
       // Upload File
       if (File.Exists(invoice))
       {
@@ -77,7 +81,7 @@ namespace BludeltaWebApiTestClient
         //ApiIdentifier = new List<string> { "Customer1", "Costumer2"}
       });
 
-      Console.WriteLine(result);
+      Console.WriteLine($"Create AccessToken: {result}");
 
       return result.AccessToken;
     }
@@ -87,7 +91,18 @@ namespace BludeltaWebApiTestClient
       var api = config != null ? new ValidatableInvoiceApi(config) : new ValidatableInvoiceApi();
       var result = api.GetValidatableInvoiceRequest();
 
-      Console.WriteLine(result);
+      Console.WriteLine($"Get ValidatableInvoices: {result}");
+
+      return result.Count;
+    }
+
+
+    private static int GetImportableInvoiceCount(Configuration config = null)
+    {
+      var api = config != null ? new ImportableInvoiceApi(config) : new ImportableInvoiceApi();
+      var result = api.GetImportableInvoiceRequest();
+
+      Console.WriteLine($"Get ImportableInvoices: {result}");
 
       return result.Count;
     }

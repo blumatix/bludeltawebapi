@@ -64,6 +64,7 @@ OpenAPI spec version: 1.0
     <Compile Include="Api\ApiBase.cs" />
     <Compile Include="Api\CreateAccessTokenApi.cs" />
     <Compile Include="Api\UploadInvoiceApi.cs" />
+    <Compile Include="Api\ImportableInvoiceApi.cs" />
     <Compile Include="Api\ValidatableInvoiceApi.cs" />
     <Compile Include="Client\ApiClient.cs" />
     <Compile Include="Client\ApiException.cs" />
