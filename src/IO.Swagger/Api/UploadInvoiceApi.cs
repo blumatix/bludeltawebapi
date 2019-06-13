@@ -11,41 +11,13 @@ namespace IO.Swagger.Api
   /// <summary>
   /// Provides methods for uploading a new invoice to the bludeltawebapi service
   /// </summary>
-  public class UploadInvoiceApi
+  public class UploadInvoiceApi : ApiBase
   {
-    private ExceptionFactory _exceptionFactory = (name, response) => null;
-
     public UploadInvoiceApi()
-    {
-      // use the default one in Configuration
-      Configuration = Configuration.Default;
+    {}
 
-      ExceptionFactory = Configuration.DefaultExceptionFactory;
-
-      // ensure API client has configuration ready
-      if (Configuration.ApiClient.Configuration == null)
-      {
-        Configuration.ApiClient.Configuration = Configuration;
-      }
-    }
-
-    public Configuration Configuration { get; set; }
-
-    /// <summary>
-    /// Provides a factory method hook for the creation of exceptions.
-    /// </summary>
-    public ExceptionFactory ExceptionFactory
-    {
-      get
-      {
-        if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
-        {
-          throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
-        }
-        return _exceptionFactory;
-      }
-      set => _exceptionFactory = value;
-    }
+    public UploadInvoiceApi(Configuration configuration) : base(configuration)
+    {}
 
     /// <summary>
     /// Upload an InvoiceContainer

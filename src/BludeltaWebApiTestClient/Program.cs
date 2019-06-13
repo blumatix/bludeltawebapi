@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using IO.Swagger.Api;
+using IO.Swagger.Client;
 using IO.Swagger.Model;
 
 namespace BludeltaWebApiTestClient
@@ -23,6 +25,12 @@ namespace BludeltaWebApiTestClient
         invoice = options.Invoice;
       }
 
+      var config = new Configuration(new ApiClient("http://localhost:8060"));
+
+      // CreateAccessToken
+      var accessToken = CreateAccessToken(config);
+
+      // Upload File
       if (File.Exists(invoice))
       {
         UploadInvoiceContainer(invoice);
@@ -32,9 +40,9 @@ namespace BludeltaWebApiTestClient
       Console.ReadKey();
     }
 
-    private static void UploadInvoiceContainer(string invoice)
+    private static void UploadInvoiceContainer(string invoice, Configuration config=null)
     {
-      var uploadApi = new UploadInvoiceApi();
+      var uploadApi = config == null ? new UploadInvoiceApi() : new UploadInvoiceApi(config);
       var invoiceBytes = File.ReadAllBytes(invoice);
 
       // optional description field
@@ -53,6 +61,22 @@ namespace BludeltaWebApiTestClient
 
 
       Console.WriteLine($"Upload response: {result}");
+    }
+
+    private static string CreateAccessToken(Configuration config = null)
+    {
+      var api = new CreateAccessTokenApi(config);
+      var result = api.AccessTokenRequest(new AccessTokenRequest
+      {
+        Name = "John Doe",
+        Description = "John Doe User",
+        TimeoutSeconds = 1500,
+        //ApiIdentifier = new List<string> { "Customer1", "Costumer2"}
+      });
+
+      Console.WriteLine(result);
+
+      return result.AccessToken;
     }
   }
 }
