@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using Newtonsoft.Json;
@@ -19,53 +18,41 @@ using Newtonsoft.Json;
 namespace IO.Swagger.Model
 {
   /// <summary>
-  ///   ReleaseInvoiceResponse
+  ///   ReducedPage
   /// </summary>
   [DataContract]
-  public class ReleaseInvoiceResponse : IEquatable<ReleaseInvoiceResponse>, IValidatableObject
+  public class ReducedPage : IEquatable<ReducedPage>, IValidatableObject
   {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ReleaseInvoiceResponse" /> class.
+    ///   Initializes a new instance of the <see cref="ReducedPage" /> class.
     /// </summary>
-    [JsonConstructor]
-    protected ReleaseInvoiceResponse()
+    /// <param name="PageNo">PageNo.</param>
+    public ReducedPage(int? PageNo = default(int?))
     {
+      this.PageNo = PageNo;
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ReleaseInvoiceResponse" /> class.
+    ///   Gets or Sets PageNo
     /// </summary>
-    /// <param name="State">On success state &#x3D;&#x3D; 0 else state &gt; 0 (required).</param>
-    public ReleaseInvoiceResponse(int? State = default(int?))
-    {
-      // to ensure "State" is required (not null)
-      if (State == null)
-        throw new InvalidDataException("State is a required property for ReleaseInvoiceResponse and cannot be null");
-      this.State = State;
-    }
+    [DataMember(Name = "PageNo", EmitDefaultValue = false)]
+    public int? PageNo { get; set; }
 
     /// <summary>
-    ///   On success state &#x3D;&#x3D; 0 else state &gt; 0
+    ///   Returns true if ReducedPage instances are equal
     /// </summary>
-    /// <value>On success state &#x3D;&#x3D; 0 else state &gt; 0</value>
-    [DataMember(Name = "State", EmitDefaultValue = false)]
-    public int? State { get; set; }
-
-    /// <summary>
-    ///   Returns true if ReleaseInvoiceResponse instances are equal
-    /// </summary>
-    /// <param name="other">Instance of ReleaseInvoiceResponse to be compared</param>
+    /// <param name="other">Instance of ReducedPage to be compared</param>
     /// <returns>Boolean</returns>
-    public bool Equals(ReleaseInvoiceResponse other)
+    public bool Equals(ReducedPage other)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
       if (other == null)
         return false;
 
       return
-        State == other.State ||
-        State != null &&
-        State.Equals(other.State);
+        PageNo == other.PageNo ||
+        PageNo != null &&
+        PageNo.Equals(other.PageNo);
     }
 
     /// <summary>
@@ -85,8 +72,8 @@ namespace IO.Swagger.Model
     public override string ToString()
     {
       var sb = new StringBuilder();
-      sb.Append("class ReleaseInvoiceResponse {\n");
-      sb.Append("  State: ").Append(State).Append("\n");
+      sb.Append("class ReducedPage {\n");
+      sb.Append("  PageNo: ").Append(PageNo).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }
@@ -108,7 +95,7 @@ namespace IO.Swagger.Model
     public override bool Equals(object obj)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as ReleaseInvoiceResponse);
+      return Equals(obj as ReducedPage);
     }
 
     /// <summary>
@@ -122,8 +109,8 @@ namespace IO.Swagger.Model
       {
         var hash = 41;
         // Suitable nullity checks etc, of course :)
-        if (State != null)
-          hash = hash * 59 + State.GetHashCode();
+        if (PageNo != null)
+          hash = hash * 59 + PageNo.GetHashCode();
         return hash;
       }
     }

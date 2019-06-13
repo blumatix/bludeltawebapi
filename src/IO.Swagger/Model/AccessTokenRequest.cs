@@ -19,66 +19,61 @@ using Newtonsoft.Json;
 namespace IO.Swagger.Model
 {
   /// <summary>
-  ///   InvoiceContainer
+  ///   The Access Token is used in all following API calls as authentication token
   /// </summary>
   [DataContract]
-  public class InvoiceContainer : IEquatable<InvoiceContainer>, IValidatableObject
+  public class AccessTokenRequest : IEquatable<AccessTokenRequest>, IValidatableObject
   {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="InvoiceContainer" /> class.
+    ///   Initializes a new instance of the <see cref="AccessTokenRequest" /> class.
     /// </summary>
-    /// <param name="ContainerId">ContainerId.</param>
-    /// <param name="Name">Name.</param>
-    /// <param name="Invoices">Invoices.</param>
-    /// <param name="Created">Created.</param>
-    /// <param name="CreatedBy">CreatedBy.</param>
-    public InvoiceContainer(string ContainerId = default(string), string Name = default(string),
-      List<Invoice> Invoices = default(List<Invoice>), DateTime? Created = default(DateTime?),
-      string CreatedBy = default(string))
+    /// <param name="Name">The name of the user.</param>
+    /// <param name="Description">Optional description.</param>
+    /// <param name="TimeoutSeconds">Expiration timeout. Will be reset with every request..</param>
+    /// <param name="ApiIdentifier">A list of ApiIdentifiers for which the token should be generated..</param>
+    public AccessTokenRequest(string Name = default(string), string Description = default(string),
+      int? TimeoutSeconds = default(int?), List<string> ApiIdentifier = default(List<string>))
     {
-      this.ContainerId = ContainerId;
       this.Name = Name;
-      this.Invoices = Invoices;
-      this.Created = Created;
-      this.CreatedBy = CreatedBy;
+      this.Description = Description;
+      this.TimeoutSeconds = TimeoutSeconds;
+      this.ApiIdentifier = ApiIdentifier;
     }
 
     /// <summary>
-    ///   Gets or Sets ContainerId
+    ///   The name of the user
     /// </summary>
-    [DataMember(Name = "ContainerId", EmitDefaultValue = false)]
-    public string ContainerId { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets Name
-    /// </summary>
+    /// <value>The name of the user</value>
     [DataMember(Name = "Name", EmitDefaultValue = false)]
     public string Name { get; set; }
 
     /// <summary>
-    ///   Gets or Sets Invoices
+    ///   Optional description
     /// </summary>
-    [DataMember(Name = "Invoices", EmitDefaultValue = false)]
-    public List<Invoice> Invoices { get; set; }
+    /// <value>Optional description</value>
+    [DataMember(Name = "Description", EmitDefaultValue = false)]
+    public string Description { get; set; }
 
     /// <summary>
-    ///   Gets or Sets Created
+    ///   Expiration timeout. Will be reset with every request.
     /// </summary>
-    [DataMember(Name = "Created", EmitDefaultValue = false)]
-    public DateTime? Created { get; set; }
+    /// <value>Expiration timeout. Will be reset with every request.</value>
+    [DataMember(Name = "TimeoutSeconds", EmitDefaultValue = false)]
+    public int? TimeoutSeconds { get; set; }
 
     /// <summary>
-    ///   Gets or Sets CreatedBy
+    ///   A list of ApiIdentifiers for which the token should be generated.
     /// </summary>
-    [DataMember(Name = "CreatedBy", EmitDefaultValue = false)]
-    public string CreatedBy { get; set; }
+    /// <value>A list of ApiIdentifiers for which the token should be generated.</value>
+    [DataMember(Name = "ApiIdentifier", EmitDefaultValue = false)]
+    public List<string> ApiIdentifier { get; set; }
 
     /// <summary>
-    ///   Returns true if InvoiceContainer instances are equal
+    ///   Returns true if AccessTokenRequest instances are equal
     /// </summary>
-    /// <param name="other">Instance of InvoiceContainer to be compared</param>
+    /// <param name="other">Instance of AccessTokenRequest to be compared</param>
     /// <returns>Boolean</returns>
-    public bool Equals(InvoiceContainer other)
+    public bool Equals(AccessTokenRequest other)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
       if (other == null)
@@ -86,29 +81,24 @@ namespace IO.Swagger.Model
 
       return
         (
-          ContainerId == other.ContainerId ||
-          ContainerId != null &&
-          ContainerId.Equals(other.ContainerId)
-        ) &&
-        (
           Name == other.Name ||
           Name != null &&
           Name.Equals(other.Name)
         ) &&
         (
-          Invoices == other.Invoices ||
-          Invoices != null &&
-          Invoices.SequenceEqual(other.Invoices)
+          Description == other.Description ||
+          Description != null &&
+          Description.Equals(other.Description)
         ) &&
         (
-          Created == other.Created ||
-          Created != null &&
-          Created.Equals(other.Created)
+          TimeoutSeconds == other.TimeoutSeconds ||
+          TimeoutSeconds != null &&
+          TimeoutSeconds.Equals(other.TimeoutSeconds)
         ) &&
         (
-          CreatedBy == other.CreatedBy ||
-          CreatedBy != null &&
-          CreatedBy.Equals(other.CreatedBy)
+          ApiIdentifier == other.ApiIdentifier ||
+          ApiIdentifier != null &&
+          ApiIdentifier.SequenceEqual(other.ApiIdentifier)
         );
     }
 
@@ -129,12 +119,11 @@ namespace IO.Swagger.Model
     public override string ToString()
     {
       var sb = new StringBuilder();
-      sb.Append("class InvoiceContainer {\n");
-      sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
+      sb.Append("class AccessTokenRequest {\n");
       sb.Append("  Name: ").Append(Name).Append("\n");
-      sb.Append("  Invoices: ").Append(Invoices).Append("\n");
-      sb.Append("  Created: ").Append(Created).Append("\n");
-      sb.Append("  CreatedBy: ").Append(CreatedBy).Append("\n");
+      sb.Append("  Description: ").Append(Description).Append("\n");
+      sb.Append("  TimeoutSeconds: ").Append(TimeoutSeconds).Append("\n");
+      sb.Append("  ApiIdentifier: ").Append(ApiIdentifier).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }
@@ -156,7 +145,7 @@ namespace IO.Swagger.Model
     public override bool Equals(object obj)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as InvoiceContainer);
+      return Equals(obj as AccessTokenRequest);
     }
 
     /// <summary>
@@ -170,16 +159,14 @@ namespace IO.Swagger.Model
       {
         var hash = 41;
         // Suitable nullity checks etc, of course :)
-        if (ContainerId != null)
-          hash = hash * 59 + ContainerId.GetHashCode();
         if (Name != null)
           hash = hash * 59 + Name.GetHashCode();
-        if (Invoices != null)
-          hash = hash * 59 + Invoices.GetHashCode();
-        if (Created != null)
-          hash = hash * 59 + Created.GetHashCode();
-        if (CreatedBy != null)
-          hash = hash * 59 + CreatedBy.GetHashCode();
+        if (Description != null)
+          hash = hash * 59 + Description.GetHashCode();
+        if (TimeoutSeconds != null)
+          hash = hash * 59 + TimeoutSeconds.GetHashCode();
+        if (ApiIdentifier != null)
+          hash = hash * 59 + ApiIdentifier.GetHashCode();
         return hash;
       }
     }

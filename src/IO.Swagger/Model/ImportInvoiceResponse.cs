@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using Newtonsoft.Json;
@@ -19,33 +18,32 @@ using Newtonsoft.Json;
 namespace IO.Swagger.Model
 {
   /// <summary>
-  ///   InvoiceContainerResponse
+  ///   ImportInvoiceResponse
   /// </summary>
   [DataContract]
-  public class InvoiceContainerResponse : IEquatable<InvoiceContainerResponse>, IValidatableObject
+  public class ImportInvoiceResponse : IEquatable<ImportInvoiceResponse>, IValidatableObject
   {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="InvoiceContainerResponse" /> class.
+    ///   Initializes a new instance of the <see cref="ImportInvoiceResponse" /> class.
     /// </summary>
     /// <param name="State">State.</param>
     /// <param name="Message">Message.</param>
-    /// <param name="ContainerId">ContainerId.</param>
-    /// <param name="Name">Name.</param>
-    /// <param name="Invoices">Invoices.</param>
-    /// <param name="Created">Created.</param>
-    /// <param name="CreatedBy">CreatedBy.</param>
-    public InvoiceContainerResponse(int? State = default(int?), string Message = default(string),
-      string ContainerId = default(string), string Name = default(string),
-      List<Invoice> Invoices = default(List<Invoice>), DateTime? Created = default(DateTime?),
-      string CreatedBy = default(string))
+    /// <param name="Available">Available.</param>
+    /// <param name="InvoiceId">InvoiceId.</param>
+    /// <param name="FileName">FileName.</param>
+    /// <param name="File">File.</param>
+    /// <param name="DetectInvoiceResponse">DetectInvoiceResponse.</param>
+    public ImportInvoiceResponse(int? State = default(int?), string Message = default(string),
+      bool? Available = default(bool?), string InvoiceId = default(string), string FileName = default(string),
+      string File = default(string), DetectInvoiceResponse DetectInvoiceResponse = default(DetectInvoiceResponse))
     {
       this.State = State;
       this.Message = Message;
-      this.ContainerId = ContainerId;
-      this.Name = Name;
-      this.Invoices = Invoices;
-      this.Created = Created;
-      this.CreatedBy = CreatedBy;
+      this.Available = Available;
+      this.InvoiceId = InvoiceId;
+      this.FileName = FileName;
+      this.File = File;
+      this.DetectInvoiceResponse = DetectInvoiceResponse;
     }
 
     /// <summary>
@@ -61,41 +59,41 @@ namespace IO.Swagger.Model
     public string Message { get; set; }
 
     /// <summary>
-    ///   Gets or Sets ContainerId
+    ///   Gets or Sets Available
     /// </summary>
-    [DataMember(Name = "ContainerId", EmitDefaultValue = false)]
-    public string ContainerId { get; set; }
+    [DataMember(Name = "Available", EmitDefaultValue = false)]
+    public bool? Available { get; set; }
 
     /// <summary>
-    ///   Gets or Sets Name
+    ///   Gets or Sets InvoiceId
     /// </summary>
-    [DataMember(Name = "Name", EmitDefaultValue = false)]
-    public string Name { get; set; }
+    [DataMember(Name = "InvoiceId", EmitDefaultValue = false)]
+    public string InvoiceId { get; set; }
 
     /// <summary>
-    ///   Gets or Sets Invoices
+    ///   Gets or Sets FileName
     /// </summary>
-    [DataMember(Name = "Invoices", EmitDefaultValue = false)]
-    public List<Invoice> Invoices { get; set; }
+    [DataMember(Name = "FileName", EmitDefaultValue = false)]
+    public string FileName { get; set; }
 
     /// <summary>
-    ///   Gets or Sets Created
+    ///   Gets or Sets File
     /// </summary>
-    [DataMember(Name = "Created", EmitDefaultValue = false)]
-    public DateTime? Created { get; set; }
+    [DataMember(Name = "File", EmitDefaultValue = false)]
+    public string File { get; set; }
 
     /// <summary>
-    ///   Gets or Sets CreatedBy
+    ///   Gets or Sets DetectInvoiceResponse
     /// </summary>
-    [DataMember(Name = "CreatedBy", EmitDefaultValue = false)]
-    public string CreatedBy { get; set; }
+    [DataMember(Name = "DetectInvoiceResponse", EmitDefaultValue = false)]
+    public DetectInvoiceResponse DetectInvoiceResponse { get; set; }
 
     /// <summary>
-    ///   Returns true if InvoiceContainerResponse instances are equal
+    ///   Returns true if ImportInvoiceResponse instances are equal
     /// </summary>
-    /// <param name="other">Instance of InvoiceContainerResponse to be compared</param>
+    /// <param name="other">Instance of ImportInvoiceResponse to be compared</param>
     /// <returns>Boolean</returns>
-    public bool Equals(InvoiceContainerResponse other)
+    public bool Equals(ImportInvoiceResponse other)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
       if (other == null)
@@ -113,29 +111,29 @@ namespace IO.Swagger.Model
           Message.Equals(other.Message)
         ) &&
         (
-          ContainerId == other.ContainerId ||
-          ContainerId != null &&
-          ContainerId.Equals(other.ContainerId)
+          Available == other.Available ||
+          Available != null &&
+          Available.Equals(other.Available)
         ) &&
         (
-          Name == other.Name ||
-          Name != null &&
-          Name.Equals(other.Name)
+          InvoiceId == other.InvoiceId ||
+          InvoiceId != null &&
+          InvoiceId.Equals(other.InvoiceId)
         ) &&
         (
-          Invoices == other.Invoices ||
-          Invoices != null &&
-          Invoices.SequenceEqual(other.Invoices)
+          FileName == other.FileName ||
+          FileName != null &&
+          FileName.Equals(other.FileName)
         ) &&
         (
-          Created == other.Created ||
-          Created != null &&
-          Created.Equals(other.Created)
+          File == other.File ||
+          File != null &&
+          File.Equals(other.File)
         ) &&
         (
-          CreatedBy == other.CreatedBy ||
-          CreatedBy != null &&
-          CreatedBy.Equals(other.CreatedBy)
+          DetectInvoiceResponse == other.DetectInvoiceResponse ||
+          DetectInvoiceResponse != null &&
+          DetectInvoiceResponse.Equals(other.DetectInvoiceResponse)
         );
     }
 
@@ -156,14 +154,14 @@ namespace IO.Swagger.Model
     public override string ToString()
     {
       var sb = new StringBuilder();
-      sb.Append("class InvoiceContainerResponse {\n");
+      sb.Append("class ImportInvoiceResponse {\n");
       sb.Append("  State: ").Append(State).Append("\n");
       sb.Append("  Message: ").Append(Message).Append("\n");
-      sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
-      sb.Append("  Name: ").Append(Name).Append("\n");
-      sb.Append("  Invoices: ").Append(Invoices).Append("\n");
-      sb.Append("  Created: ").Append(Created).Append("\n");
-      sb.Append("  CreatedBy: ").Append(CreatedBy).Append("\n");
+      sb.Append("  Available: ").Append(Available).Append("\n");
+      sb.Append("  InvoiceId: ").Append(InvoiceId).Append("\n");
+      sb.Append("  FileName: ").Append(FileName).Append("\n");
+      sb.Append("  File: ").Append(File).Append("\n");
+      sb.Append("  DetectInvoiceResponse: ").Append(DetectInvoiceResponse).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }
@@ -185,7 +183,7 @@ namespace IO.Swagger.Model
     public override bool Equals(object obj)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as InvoiceContainerResponse);
+      return Equals(obj as ImportInvoiceResponse);
     }
 
     /// <summary>
@@ -203,16 +201,16 @@ namespace IO.Swagger.Model
           hash = hash * 59 + State.GetHashCode();
         if (Message != null)
           hash = hash * 59 + Message.GetHashCode();
-        if (ContainerId != null)
-          hash = hash * 59 + ContainerId.GetHashCode();
-        if (Name != null)
-          hash = hash * 59 + Name.GetHashCode();
-        if (Invoices != null)
-          hash = hash * 59 + Invoices.GetHashCode();
-        if (Created != null)
-          hash = hash * 59 + Created.GetHashCode();
-        if (CreatedBy != null)
-          hash = hash * 59 + CreatedBy.GetHashCode();
+        if (Available != null)
+          hash = hash * 59 + Available.GetHashCode();
+        if (InvoiceId != null)
+          hash = hash * 59 + InvoiceId.GetHashCode();
+        if (FileName != null)
+          hash = hash * 59 + FileName.GetHashCode();
+        if (File != null)
+          hash = hash * 59 + File.GetHashCode();
+        if (DetectInvoiceResponse != null)
+          hash = hash * 59 + DetectInvoiceResponse.GetHashCode();
         return hash;
       }
     }

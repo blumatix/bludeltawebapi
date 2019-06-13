@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using Newtonsoft.Json;
@@ -19,53 +18,70 @@ using Newtonsoft.Json;
 namespace IO.Swagger.Model
 {
   /// <summary>
-  ///   ReleaseInvoiceResponse
+  ///   CountedInvoicesResponse
   /// </summary>
   [DataContract]
-  public class ReleaseInvoiceResponse : IEquatable<ReleaseInvoiceResponse>, IValidatableObject
+  public class CountedInvoicesResponse : IEquatable<CountedInvoicesResponse>, IValidatableObject
   {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ReleaseInvoiceResponse" /> class.
+    ///   Initializes a new instance of the <see cref="CountedInvoicesResponse" /> class.
     /// </summary>
-    [JsonConstructor]
-    protected ReleaseInvoiceResponse()
+    /// <param name="State">State.</param>
+    /// <param name="Message">Message.</param>
+    /// <param name="Count">Count.</param>
+    public CountedInvoicesResponse(int? State = default(int?), string Message = default(string),
+      int? Count = default(int?))
     {
-    }
-
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="ReleaseInvoiceResponse" /> class.
-    /// </summary>
-    /// <param name="State">On success state &#x3D;&#x3D; 0 else state &gt; 0 (required).</param>
-    public ReleaseInvoiceResponse(int? State = default(int?))
-    {
-      // to ensure "State" is required (not null)
-      if (State == null)
-        throw new InvalidDataException("State is a required property for ReleaseInvoiceResponse and cannot be null");
       this.State = State;
+      this.Message = Message;
+      this.Count = Count;
     }
 
     /// <summary>
-    ///   On success state &#x3D;&#x3D; 0 else state &gt; 0
+    ///   Gets or Sets State
     /// </summary>
-    /// <value>On success state &#x3D;&#x3D; 0 else state &gt; 0</value>
     [DataMember(Name = "State", EmitDefaultValue = false)]
     public int? State { get; set; }
 
     /// <summary>
-    ///   Returns true if ReleaseInvoiceResponse instances are equal
+    ///   Gets or Sets Message
     /// </summary>
-    /// <param name="other">Instance of ReleaseInvoiceResponse to be compared</param>
+    [DataMember(Name = "Message", EmitDefaultValue = false)]
+    public string Message { get; set; }
+
+    /// <summary>
+    ///   Gets or Sets Count
+    /// </summary>
+    [DataMember(Name = "Count", EmitDefaultValue = false)]
+    public int? Count { get; set; }
+
+    /// <summary>
+    ///   Returns true if CountedInvoicesResponse instances are equal
+    /// </summary>
+    /// <param name="other">Instance of CountedInvoicesResponse to be compared</param>
     /// <returns>Boolean</returns>
-    public bool Equals(ReleaseInvoiceResponse other)
+    public bool Equals(CountedInvoicesResponse other)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
       if (other == null)
         return false;
 
       return
-        State == other.State ||
-        State != null &&
-        State.Equals(other.State);
+        (
+          State == other.State ||
+          State != null &&
+          State.Equals(other.State)
+        ) &&
+        (
+          Message == other.Message ||
+          Message != null &&
+          Message.Equals(other.Message)
+        ) &&
+        (
+          Count == other.Count ||
+          Count != null &&
+          Count.Equals(other.Count)
+        );
     }
 
     /// <summary>
@@ -85,8 +101,10 @@ namespace IO.Swagger.Model
     public override string ToString()
     {
       var sb = new StringBuilder();
-      sb.Append("class ReleaseInvoiceResponse {\n");
+      sb.Append("class CountedInvoicesResponse {\n");
       sb.Append("  State: ").Append(State).Append("\n");
+      sb.Append("  Message: ").Append(Message).Append("\n");
+      sb.Append("  Count: ").Append(Count).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }
@@ -108,7 +126,7 @@ namespace IO.Swagger.Model
     public override bool Equals(object obj)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as ReleaseInvoiceResponse);
+      return Equals(obj as CountedInvoicesResponse);
     }
 
     /// <summary>
@@ -124,6 +142,10 @@ namespace IO.Swagger.Model
         // Suitable nullity checks etc, of course :)
         if (State != null)
           hash = hash * 59 + State.GetHashCode();
+        if (Message != null)
+          hash = hash * 59 + Message.GetHashCode();
+        if (Count != null)
+          hash = hash * 59 + Count.GetHashCode();
         return hash;
       }
     }

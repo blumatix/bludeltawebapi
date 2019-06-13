@@ -69,17 +69,25 @@ OpenAPI spec version: 1.0
     <Compile Include="Client\ExceptionFactory.cs" />
     <Compile Include="Client\IApiAccessor.cs" />
     <Compile Include="Client\SwaggerDateConverter.cs" />
+    <Compile Include="Model\AccessTokenRequest.cs" />
+    <Compile Include="Model\AccessTokenResponse.cs" />
     <Compile Include="Model\AddressResponse.cs" />
     <Compile Include="Model\ApiIdentifier.cs" />
     <Compile Include="Model\ApiKey.cs" />
     <Compile Include="Model\AutoprocessedInvoiceContainerRequest.cs" />
+    <Compile Include="Model\ConfirmationResponse.cs" />
+    <Compile Include="Model\ConfirmInvoiceRequest.cs" />
     <Compile Include="Model\ContactResponse.cs" />
+    <Compile Include="Model\CountedInvoicesResponse.cs" />
     <Compile Include="Model\DetailResponse.cs" />
     <Compile Include="Model\DetectInvoiceResponse.cs" />
     <Compile Include="Model\DetectionGroupResponse.cs" />
     <Compile Include="Model\DetectionResponse.cs" />
     <Compile Include="Model\DictionaryStringInt64.cs" />
     <Compile Include="Model\ImageRequest.cs" />
+    <Compile Include="Model\ImportableInvoiceRequest.cs" />
+    <Compile Include="Model\ImportInvoiceRequest.cs" />
+    <Compile Include="Model\ImportInvoiceResponse.cs" />
     <Compile Include="Model\Invoice.cs" />
     <Compile Include="Model\InvoiceContainer.cs" />
     <Compile Include="Model\InvoiceContainerKeepAliveLockRequest.cs" />
@@ -101,6 +109,8 @@ OpenAPI spec version: 1.0
     <Compile Include="Model\OcrResultRequest.cs" />
     <Compile Include="Model\OcrResultResponse.cs" />
     <Compile Include="Model\Page.cs" />
+    <Compile Include="Model\ReducedInvoice.cs" />
+    <Compile Include="Model\ReducedPage.cs" />
     <Compile Include="Model\ReleasableInvoice.cs" />
     <Compile Include="Model\ReleasableInvoiceRequest.cs" />
     <Compile Include="Model\ReleasableInvoiceResponse.cs" />
@@ -110,6 +120,7 @@ OpenAPI spec version: 1.0
     <Compile Include="Model\SaveInvoiceResponse.cs" />
     <Compile Include="Model\UploadInvoiceContainerRequest.cs" />
     <Compile Include="Model\UploadInvoiceContainerResponse.cs" />
+    <Compile Include="Model\ValidatableInvoiceRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

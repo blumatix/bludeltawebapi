@@ -47,7 +47,6 @@ namespace IO.Swagger.Api
       set => _exceptionFactory = value;
     }
 
-
     /// <summary>
     /// Upload an InvoiceContainer
     /// </summary>
@@ -112,7 +111,6 @@ namespace IO.Swagger.Api
         (UploadInvoiceContainerResponse)Configuration.ApiClient.Deserialize(localVarResponse, typeof(UploadInvoiceContainerResponse))
       );
     }
-
 
     /// <summary>
     /// Upload an InvoiceContainer

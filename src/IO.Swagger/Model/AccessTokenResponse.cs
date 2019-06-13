@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using Newtonsoft.Json;
@@ -19,53 +18,73 @@ using Newtonsoft.Json;
 namespace IO.Swagger.Model
 {
   /// <summary>
-  ///   ReleaseInvoiceResponse
+  ///   AccessTokenResponse
   /// </summary>
   [DataContract]
-  public class ReleaseInvoiceResponse : IEquatable<ReleaseInvoiceResponse>, IValidatableObject
+  public class AccessTokenResponse : IEquatable<AccessTokenResponse>, IValidatableObject
   {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ReleaseInvoiceResponse" /> class.
+    ///   Initializes a new instance of the <see cref="AccessTokenResponse" /> class.
     /// </summary>
-    [JsonConstructor]
-    protected ReleaseInvoiceResponse()
+    /// <param name="State">0 &#x3D; Ok, 1 &#x3D; Failed.</param>
+    /// <param name="Message">Error message in case of an error.</param>
+    /// <param name="AccessToken">The generated access token. Must be provided as header field &#39;X-AccessToken&#39;.</param>
+    public AccessTokenResponse(int? State = default(int?), string Message = default(string),
+      string AccessToken = default(string))
     {
-    }
-
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="ReleaseInvoiceResponse" /> class.
-    /// </summary>
-    /// <param name="State">On success state &#x3D;&#x3D; 0 else state &gt; 0 (required).</param>
-    public ReleaseInvoiceResponse(int? State = default(int?))
-    {
-      // to ensure "State" is required (not null)
-      if (State == null)
-        throw new InvalidDataException("State is a required property for ReleaseInvoiceResponse and cannot be null");
       this.State = State;
+      this.Message = Message;
+      this.AccessToken = AccessToken;
     }
 
     /// <summary>
-    ///   On success state &#x3D;&#x3D; 0 else state &gt; 0
+    ///   0 &#x3D; Ok, 1 &#x3D; Failed
     /// </summary>
-    /// <value>On success state &#x3D;&#x3D; 0 else state &gt; 0</value>
+    /// <value>0 &#x3D; Ok, 1 &#x3D; Failed</value>
     [DataMember(Name = "State", EmitDefaultValue = false)]
     public int? State { get; set; }
 
     /// <summary>
-    ///   Returns true if ReleaseInvoiceResponse instances are equal
+    ///   Error message in case of an error
     /// </summary>
-    /// <param name="other">Instance of ReleaseInvoiceResponse to be compared</param>
+    /// <value>Error message in case of an error</value>
+    [DataMember(Name = "Message", EmitDefaultValue = false)]
+    public string Message { get; set; }
+
+    /// <summary>
+    ///   The generated access token. Must be provided as header field &#39;X-AccessToken&#39;
+    /// </summary>
+    /// <value>The generated access token. Must be provided as header field &#39;X-AccessToken&#39;</value>
+    [DataMember(Name = "AccessToken", EmitDefaultValue = false)]
+    public string AccessToken { get; set; }
+
+    /// <summary>
+    ///   Returns true if AccessTokenResponse instances are equal
+    /// </summary>
+    /// <param name="other">Instance of AccessTokenResponse to be compared</param>
     /// <returns>Boolean</returns>
-    public bool Equals(ReleaseInvoiceResponse other)
+    public bool Equals(AccessTokenResponse other)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
       if (other == null)
         return false;
 
       return
-        State == other.State ||
-        State != null &&
-        State.Equals(other.State);
+        (
+          State == other.State ||
+          State != null &&
+          State.Equals(other.State)
+        ) &&
+        (
+          Message == other.Message ||
+          Message != null &&
+          Message.Equals(other.Message)
+        ) &&
+        (
+          AccessToken == other.AccessToken ||
+          AccessToken != null &&
+          AccessToken.Equals(other.AccessToken)
+        );
     }
 
     /// <summary>
@@ -85,8 +104,10 @@ namespace IO.Swagger.Model
     public override string ToString()
     {
       var sb = new StringBuilder();
-      sb.Append("class ReleaseInvoiceResponse {\n");
+      sb.Append("class AccessTokenResponse {\n");
       sb.Append("  State: ").Append(State).Append("\n");
+      sb.Append("  Message: ").Append(Message).Append("\n");
+      sb.Append("  AccessToken: ").Append(AccessToken).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }
@@ -108,7 +129,7 @@ namespace IO.Swagger.Model
     public override bool Equals(object obj)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as ReleaseInvoiceResponse);
+      return Equals(obj as AccessTokenResponse);
     }
 
     /// <summary>
@@ -124,6 +145,10 @@ namespace IO.Swagger.Model
         // Suitable nullity checks etc, of course :)
         if (State != null)
           hash = hash * 59 + State.GetHashCode();
+        if (Message != null)
+          hash = hash * 59 + Message.GetHashCode();
+        if (AccessToken != null)
+          hash = hash * 59 + AccessToken.GetHashCode();
         return hash;
       }
     }

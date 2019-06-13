@@ -11,7 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using Newtonsoft.Json;
@@ -19,53 +19,56 @@ using Newtonsoft.Json;
 namespace IO.Swagger.Model
 {
   /// <summary>
-  ///   ReleaseInvoiceResponse
+  ///   ReducedInvoice
   /// </summary>
   [DataContract]
-  public class ReleaseInvoiceResponse : IEquatable<ReleaseInvoiceResponse>, IValidatableObject
+  public class ReducedInvoice : IEquatable<ReducedInvoice>, IValidatableObject
   {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ReleaseInvoiceResponse" /> class.
+    ///   Initializes a new instance of the <see cref="ReducedInvoice" /> class.
     /// </summary>
-    [JsonConstructor]
-    protected ReleaseInvoiceResponse()
+    /// <param name="InvoiceId">InvoiceId.</param>
+    /// <param name="Pages">Pages.</param>
+    public ReducedInvoice(string InvoiceId = default(string), List<ReducedPage> Pages = default(List<ReducedPage>))
     {
+      this.InvoiceId = InvoiceId;
+      this.Pages = Pages;
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ReleaseInvoiceResponse" /> class.
+    ///   Gets or Sets InvoiceId
     /// </summary>
-    /// <param name="State">On success state &#x3D;&#x3D; 0 else state &gt; 0 (required).</param>
-    public ReleaseInvoiceResponse(int? State = default(int?))
-    {
-      // to ensure "State" is required (not null)
-      if (State == null)
-        throw new InvalidDataException("State is a required property for ReleaseInvoiceResponse and cannot be null");
-      this.State = State;
-    }
+    [DataMember(Name = "InvoiceId", EmitDefaultValue = false)]
+    public string InvoiceId { get; set; }
 
     /// <summary>
-    ///   On success state &#x3D;&#x3D; 0 else state &gt; 0
+    ///   Gets or Sets Pages
     /// </summary>
-    /// <value>On success state &#x3D;&#x3D; 0 else state &gt; 0</value>
-    [DataMember(Name = "State", EmitDefaultValue = false)]
-    public int? State { get; set; }
+    [DataMember(Name = "Pages", EmitDefaultValue = false)]
+    public List<ReducedPage> Pages { get; set; }
 
     /// <summary>
-    ///   Returns true if ReleaseInvoiceResponse instances are equal
+    ///   Returns true if ReducedInvoice instances are equal
     /// </summary>
-    /// <param name="other">Instance of ReleaseInvoiceResponse to be compared</param>
+    /// <param name="other">Instance of ReducedInvoice to be compared</param>
     /// <returns>Boolean</returns>
-    public bool Equals(ReleaseInvoiceResponse other)
+    public bool Equals(ReducedInvoice other)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
       if (other == null)
         return false;
 
       return
-        State == other.State ||
-        State != null &&
-        State.Equals(other.State);
+        (
+          InvoiceId == other.InvoiceId ||
+          InvoiceId != null &&
+          InvoiceId.Equals(other.InvoiceId)
+        ) &&
+        (
+          Pages == other.Pages ||
+          Pages != null &&
+          Pages.SequenceEqual(other.Pages)
+        );
     }
 
     /// <summary>
@@ -85,8 +88,9 @@ namespace IO.Swagger.Model
     public override string ToString()
     {
       var sb = new StringBuilder();
-      sb.Append("class ReleaseInvoiceResponse {\n");
-      sb.Append("  State: ").Append(State).Append("\n");
+      sb.Append("class ReducedInvoice {\n");
+      sb.Append("  InvoiceId: ").Append(InvoiceId).Append("\n");
+      sb.Append("  Pages: ").Append(Pages).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }
@@ -108,7 +112,7 @@ namespace IO.Swagger.Model
     public override bool Equals(object obj)
     {
       // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as ReleaseInvoiceResponse);
+      return Equals(obj as ReducedInvoice);
     }
 
     /// <summary>
@@ -122,8 +126,10 @@ namespace IO.Swagger.Model
       {
         var hash = 41;
         // Suitable nullity checks etc, of course :)
-        if (State != null)
-          hash = hash * 59 + State.GetHashCode();
+        if (InvoiceId != null)
+          hash = hash * 59 + InvoiceId.GetHashCode();
+        if (Pages != null)
+          hash = hash * 59 + Pages.GetHashCode();
         return hash;
       }
     }
