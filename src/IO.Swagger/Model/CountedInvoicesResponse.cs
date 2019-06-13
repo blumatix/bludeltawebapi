@@ -29,8 +29,7 @@ namespace IO.Swagger.Model
     /// <param name="State">State.</param>
     /// <param name="Message">Message.</param>
     /// <param name="Count">Count.</param>
-    public CountedInvoicesResponse(int? State = default(int?), string Message = default(string),
-      int? Count = default(int?))
+    public CountedInvoicesResponse(int State, string Message, int Count)
     {
       this.State = State;
       this.Message = Message;
@@ -41,7 +40,7 @@ namespace IO.Swagger.Model
     ///   Gets or Sets State
     /// </summary>
     [DataMember(Name = "State", EmitDefaultValue = false)]
-    public int? State { get; set; }
+    public int State { get; set; }
 
     /// <summary>
     ///   Gets or Sets Message
@@ -53,7 +52,7 @@ namespace IO.Swagger.Model
     ///   Gets or Sets Count
     /// </summary>
     [DataMember(Name = "Count", EmitDefaultValue = false)]
-    public int? Count { get; set; }
+    public int Count { get; set; }
 
     /// <summary>
     ///   Returns true if CountedInvoicesResponse instances are equal

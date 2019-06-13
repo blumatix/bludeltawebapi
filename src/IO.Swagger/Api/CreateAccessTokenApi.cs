@@ -49,7 +49,7 @@ namespace IO.Swagger.Api
       object localVarPostBody = null;
 
       // to determine the Content-Type header
-      var localVarHttpContentTypes = new [] {"application/x-www-form-urlencoded"};
+      var localVarHttpContentTypes = new [] { "application/json" };
       var localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
       // to determine the Accept header
