@@ -36,7 +36,11 @@ namespace BludeltaWebApiTestClient
       // Get number of importable invoices
       var importableInvoiceCount = GetImportableInvoiceCount(config);
 
+      // Get next invoice for import
       var invoiceTuple = ImportNextInvoice(config);
+
+      // Confirm an invoice
+      var isConfirmed = ConfirmInvoice("667EA5E7-960C-4999-8348-650B350C1982", config);
 
       // Upload File
       if (File.Exists(invoice))
@@ -48,7 +52,7 @@ namespace BludeltaWebApiTestClient
       Console.ReadKey();
     }
 
-    private static void UploadInvoiceContainer(string invoice, Configuration config=null)
+    private static bool UploadInvoiceContainer(string invoice, Configuration config=null)
     {
       var uploadApi = config == null ? new UploadInvoiceApi() : new UploadInvoiceApi(config);
       var invoiceBytes = File.ReadAllBytes(invoice);
@@ -67,8 +71,9 @@ namespace BludeltaWebApiTestClient
 
       var result = uploadApi.UploadInvoiceContainer(request);
 
-
       Console.WriteLine($"Upload response: {result}");
+
+      return result.State == 0;
     }
 
     private static string CreateAccessToken(Configuration config = null)
@@ -115,6 +120,17 @@ namespace BludeltaWebApiTestClient
       Console.WriteLine($"Get ImportInvoice {result}");
 
       return Tuple.Create(result.FileName, Convert.FromBase64String(result.File), result.DetectInvoiceResponse);
+    }
+
+    private static bool ConfirmInvoice(string invoiceId, Configuration config = null)
+    {
+      var api = config != null ? new ConfirmInvoiceApi(config) : new ConfirmInvoiceApi();
+
+      var result = api.PostConfirmInvoiceRequest(new ConfirmInvoiceRequest(0, invoiceId));
+
+      Console.WriteLine($"Post ConfirmInvoiceRequest: {result}");
+
+      return result.State == 0;
     }
   }
 }

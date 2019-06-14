@@ -30,7 +30,7 @@ namespace IO.Swagger.Model
     /// </summary>
     /// <param name="State">State.</param>
     /// <param name="InvoiceId">InvoiceId.</param>
-    public ConfirmInvoiceRequest(int? State = default(int?), string InvoiceId = default(string))
+    public ConfirmInvoiceRequest(int State, string InvoiceId)
     {
       this.State = State;
       this.InvoiceId = InvoiceId;
@@ -40,7 +40,7 @@ namespace IO.Swagger.Model
     ///   Gets or Sets State
     /// </summary>
     [DataMember(Name = "State", EmitDefaultValue = false)]
-    public int? State { get; set; }
+    public int State { get; set; }
 
     /// <summary>
     ///   Gets or Sets InvoiceId
@@ -62,7 +62,6 @@ namespace IO.Swagger.Model
       return
         (
           State == other.State ||
-          State != null &&
           State.Equals(other.State)
         ) &&
         (
@@ -127,8 +126,7 @@ namespace IO.Swagger.Model
       {
         var hash = 41;
         // Suitable nullity checks etc, of course :)
-        if (State != null)
-          hash = hash * 59 + State.GetHashCode();
+        hash = hash * 59 + State.GetHashCode();
         if (InvoiceId != null)
           hash = hash * 59 + InvoiceId.GetHashCode();
         return hash;

@@ -62,6 +62,7 @@ OpenAPI spec version: 1.0
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ApiBase.cs" />
+    <Compile Include="Api\ConfirmInvoiceApi.cs" />
     <Compile Include="Api\CreateAccessTokenApi.cs" />
     <Compile Include="Api\ImportInvoiceApi.cs" />
     <Compile Include="Api\UploadInvoiceApi.cs" />
