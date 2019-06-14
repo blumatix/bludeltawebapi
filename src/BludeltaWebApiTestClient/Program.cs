@@ -36,6 +36,7 @@ namespace BludeltaWebApiTestClient
       // Get number of importable invoices
       var importableInvoiceCount = GetImportableInvoiceCount(config);
 
+      var invoiceTuple = ImportNextInvoice(config);
 
       // Upload File
       if (File.Exists(invoice))
@@ -96,7 +97,6 @@ namespace BludeltaWebApiTestClient
       return result.Count;
     }
 
-
     private static int GetImportableInvoiceCount(Configuration config = null)
     {
       var api = config != null ? new ImportableInvoiceApi(config) : new ImportableInvoiceApi();
@@ -105,6 +105,16 @@ namespace BludeltaWebApiTestClient
       Console.WriteLine($"Get ImportableInvoices: {result}");
 
       return result.Count;
+    }
+
+    private static Tuple<string, byte[], DetectInvoiceResponse> ImportNextInvoice(Configuration config = null)
+    {
+      var api = config != null ? new ImportInvoiceApi(config) : new ImportInvoiceApi();
+      var result = api.GetImportInvoiceRequest();
+
+      Console.WriteLine($"Get ImportInvoice {result}");
+
+      return Tuple.Create(result.FileName, Convert.FromBase64String(result.File), result.DetectInvoiceResponse);
     }
   }
 }
