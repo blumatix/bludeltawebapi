@@ -9,318 +9,326 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   DetectionResponse
-  /// </summary>
-  [DataContract]
-  public class DetectionResponse : IEquatable<DetectionResponse>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="DetectionResponse" /> class.
+    /// DetectionResponse
     /// </summary>
-    [JsonConstructor]
-    protected DetectionResponse()
+    [DataContract]
+    public partial class DetectionResponse :  IEquatable<DetectionResponse>, IValidatableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DetectionResponse" /> class.
+        /// </summary>
+        [JsonConstructorAttribute]
+        protected DetectionResponse() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DetectionResponse" /> class.
+        /// </summary>
+        /// <param name="Type">Predicted invoice detail (required).</param>
+        /// <param name="TypeName">Predicted invoice detail (required).</param>
+        /// <param name="Text">The raw text.</param>
+        /// <param name="Value">Predicted value &lt;br&gt;&lt;br&gt;Formats:&lt;br&gt;&lt;ul&gt;&lt;li&gt;GrandTotalAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;NetAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;VatAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;VatRate: decimal separator &#39;.&#39;, no group separator, one decimal digits, e.g. 20.0, 19.0, 10.0&lt;/li&gt;&lt;li&gt;InvoiceDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;DeliveryDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;SenderOrderDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;ReceiverOrderDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;CustomerId: string&lt;/li&gt;&lt;li&gt;SenderOrderId: string&lt;/li&gt;&lt;li&gt;ReceiverOrderId: string&lt;/li&gt;&lt;li&gt;DocumentType: &#39;Invoice&#39; or &#39;CreditMemo&#39;&lt;/li&gt;&lt;li&gt;Ibans: string without blanks, comma separated&lt;/li&gt;&lt;li&gt;UstIds: string without blanks, comma separated&lt;/li&gt;&lt;/ul&gt; (required).</param>
+        /// <param name="Score">Scored probability. Value between zero and one. (required).</param>
+        /// <param name="X">X-Position according to the document resolution (required).</param>
+        /// <param name="Y">Y-Position according to the document resolution (required).</param>
+        /// <param name="Width">Width according to the document resolution (required).</param>
+        /// <param name="Height">Height according to the document resolution (required).</param>
+        public DetectionResponse(int? Type = default(int?), string TypeName = default(string), string Text = default(string), string Value = default(string), double? Score = default(double?), int? X = default(int?), int? Y = default(int?), int? Width = default(int?), int? Height = default(int?))
+        {
+            // to ensure "Type" is required (not null)
+            if (Type == null)
+            {
+                throw new InvalidDataException("Type is a required property for DetectionResponse and cannot be null");
+            }
+            else
+            {
+                this.Type = Type;
+            }
+            // to ensure "TypeName" is required (not null)
+            if (TypeName == null)
+            {
+                throw new InvalidDataException("TypeName is a required property for DetectionResponse and cannot be null");
+            }
+            else
+            {
+                this.TypeName = TypeName;
+            }
+            // to ensure "Value" is required (not null)
+            if (Value == null)
+            {
+                throw new InvalidDataException("Value is a required property for DetectionResponse and cannot be null");
+            }
+            else
+            {
+                this.Value = Value;
+            }
+            // to ensure "Score" is required (not null)
+            if (Score == null)
+            {
+                throw new InvalidDataException("Score is a required property for DetectionResponse and cannot be null");
+            }
+            else
+            {
+                this.Score = Score;
+            }
+            // to ensure "X" is required (not null)
+            if (X == null)
+            {
+                throw new InvalidDataException("X is a required property for DetectionResponse and cannot be null");
+            }
+            else
+            {
+                this.X = X;
+            }
+            // to ensure "Y" is required (not null)
+            if (Y == null)
+            {
+                throw new InvalidDataException("Y is a required property for DetectionResponse and cannot be null");
+            }
+            else
+            {
+                this.Y = Y;
+            }
+            // to ensure "Width" is required (not null)
+            if (Width == null)
+            {
+                throw new InvalidDataException("Width is a required property for DetectionResponse and cannot be null");
+            }
+            else
+            {
+                this.Width = Width;
+            }
+            // to ensure "Height" is required (not null)
+            if (Height == null)
+            {
+                throw new InvalidDataException("Height is a required property for DetectionResponse and cannot be null");
+            }
+            else
+            {
+                this.Height = Height;
+            }
+            this.Text = Text;
+        }
+        
+        /// <summary>
+        /// Predicted invoice detail
+        /// </summary>
+        /// <value>Predicted invoice detail</value>
+        [DataMember(Name="Type", EmitDefaultValue=false)]
+        public int? Type { get; set; }
+
+        /// <summary>
+        /// Predicted invoice detail
+        /// </summary>
+        /// <value>Predicted invoice detail</value>
+        [DataMember(Name="TypeName", EmitDefaultValue=false)]
+        public string TypeName { get; set; }
+
+        /// <summary>
+        /// The raw text
+        /// </summary>
+        /// <value>The raw text</value>
+        [DataMember(Name="Text", EmitDefaultValue=false)]
+        public string Text { get; set; }
+
+        /// <summary>
+        /// Predicted value &lt;br&gt;&lt;br&gt;Formats:&lt;br&gt;&lt;ul&gt;&lt;li&gt;GrandTotalAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;NetAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;VatAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;VatRate: decimal separator &#39;.&#39;, no group separator, one decimal digits, e.g. 20.0, 19.0, 10.0&lt;/li&gt;&lt;li&gt;InvoiceDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;DeliveryDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;SenderOrderDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;ReceiverOrderDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;CustomerId: string&lt;/li&gt;&lt;li&gt;SenderOrderId: string&lt;/li&gt;&lt;li&gt;ReceiverOrderId: string&lt;/li&gt;&lt;li&gt;DocumentType: &#39;Invoice&#39; or &#39;CreditMemo&#39;&lt;/li&gt;&lt;li&gt;Ibans: string without blanks, comma separated&lt;/li&gt;&lt;li&gt;UstIds: string without blanks, comma separated&lt;/li&gt;&lt;/ul&gt;
+        /// </summary>
+        /// <value>Predicted value &lt;br&gt;&lt;br&gt;Formats:&lt;br&gt;&lt;ul&gt;&lt;li&gt;GrandTotalAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;NetAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;VatAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;VatRate: decimal separator &#39;.&#39;, no group separator, one decimal digits, e.g. 20.0, 19.0, 10.0&lt;/li&gt;&lt;li&gt;InvoiceDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;DeliveryDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;SenderOrderDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;ReceiverOrderDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;CustomerId: string&lt;/li&gt;&lt;li&gt;SenderOrderId: string&lt;/li&gt;&lt;li&gt;ReceiverOrderId: string&lt;/li&gt;&lt;li&gt;DocumentType: &#39;Invoice&#39; or &#39;CreditMemo&#39;&lt;/li&gt;&lt;li&gt;Ibans: string without blanks, comma separated&lt;/li&gt;&lt;li&gt;UstIds: string without blanks, comma separated&lt;/li&gt;&lt;/ul&gt;</value>
+        [DataMember(Name="Value", EmitDefaultValue=false)]
+        public string Value { get; set; }
+
+        /// <summary>
+        /// Scored probability. Value between zero and one.
+        /// </summary>
+        /// <value>Scored probability. Value between zero and one.</value>
+        [DataMember(Name="Score", EmitDefaultValue=false)]
+        public double? Score { get; set; }
+
+        /// <summary>
+        /// X-Position according to the document resolution
+        /// </summary>
+        /// <value>X-Position according to the document resolution</value>
+        [DataMember(Name="X", EmitDefaultValue=false)]
+        public int? X { get; set; }
+
+        /// <summary>
+        /// Y-Position according to the document resolution
+        /// </summary>
+        /// <value>Y-Position according to the document resolution</value>
+        [DataMember(Name="Y", EmitDefaultValue=false)]
+        public int? Y { get; set; }
+
+        /// <summary>
+        /// Width according to the document resolution
+        /// </summary>
+        /// <value>Width according to the document resolution</value>
+        [DataMember(Name="Width", EmitDefaultValue=false)]
+        public int? Width { get; set; }
+
+        /// <summary>
+        /// Height according to the document resolution
+        /// </summary>
+        /// <value>Height according to the document resolution</value>
+        [DataMember(Name="Height", EmitDefaultValue=false)]
+        public int? Height { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class DetectionResponse {\n");
+            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  TypeName: ").Append(TypeName).Append("\n");
+            sb.Append("  Text: ").Append(Text).Append("\n");
+            sb.Append("  Value: ").Append(Value).Append("\n");
+            sb.Append("  Score: ").Append(Score).Append("\n");
+            sb.Append("  X: ").Append(X).Append("\n");
+            sb.Append("  Y: ").Append(Y).Append("\n");
+            sb.Append("  Width: ").Append(Width).Append("\n");
+            sb.Append("  Height: ").Append(Height).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DetectionResponse);
+        }
+
+        /// <summary>
+        /// Returns true if DetectionResponse instances are equal
+        /// </summary>
+        /// <param name="other">Instance of DetectionResponse to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(DetectionResponse other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
+                ) && 
+                (
+                    this.TypeName == other.TypeName ||
+                    this.TypeName != null &&
+                    this.TypeName.Equals(other.TypeName)
+                ) && 
+                (
+                    this.Text == other.Text ||
+                    this.Text != null &&
+                    this.Text.Equals(other.Text)
+                ) && 
+                (
+                    this.Value == other.Value ||
+                    this.Value != null &&
+                    this.Value.Equals(other.Value)
+                ) && 
+                (
+                    this.Score == other.Score ||
+                    this.Score != null &&
+                    this.Score.Equals(other.Score)
+                ) && 
+                (
+                    this.X == other.X ||
+                    this.X != null &&
+                    this.X.Equals(other.X)
+                ) && 
+                (
+                    this.Y == other.Y ||
+                    this.Y != null &&
+                    this.Y.Equals(other.Y)
+                ) && 
+                (
+                    this.Width == other.Width ||
+                    this.Width != null &&
+                    this.Width.Equals(other.Width)
+                ) && 
+                (
+                    this.Height == other.Height ||
+                    this.Height != null &&
+                    this.Height.Equals(other.Height)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.Type != null)
+                    hash = hash * 59 + this.Type.GetHashCode();
+                if (this.TypeName != null)
+                    hash = hash * 59 + this.TypeName.GetHashCode();
+                if (this.Text != null)
+                    hash = hash * 59 + this.Text.GetHashCode();
+                if (this.Value != null)
+                    hash = hash * 59 + this.Value.GetHashCode();
+                if (this.Score != null)
+                    hash = hash * 59 + this.Score.GetHashCode();
+                if (this.X != null)
+                    hash = hash * 59 + this.X.GetHashCode();
+                if (this.Y != null)
+                    hash = hash * 59 + this.Y.GetHashCode();
+                if (this.Width != null)
+                    hash = hash * 59 + this.Width.GetHashCode();
+                if (this.Height != null)
+                    hash = hash * 59 + this.Height.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="DetectionResponse" /> class.
-    /// </summary>
-    /// <param name="Type">Predicted invoice detail (required).</param>
-    /// <param name="TypeName">Predicted invoice detail (required).</param>
-    /// <param name="Text">The raw text.</param>
-    /// <param name="Value">
-    ///   Predicted value &lt;br&gt;&lt;br&gt;Formats:&lt;br&gt;&lt;ul&gt;&lt;li&gt;GrandTotalAmount: decimal
-    ///   separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;
-    ///   NetAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li
-    ///   &gt;&lt;li&gt;VatAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50,
-    ///   -12.99&lt;/li&gt;&lt;li&gt;VatRate: decimal separator &#39;.&#39;, no group separator, one decimal digits, e.g. 20.0,
-    ///   19.0, 10.0&lt;/li&gt;&lt;li&gt;InvoiceDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;DeliveryDate: YYYY-MM-DD (ISO
-    ///   8601)&lt;/li&gt;&lt;li&gt;SenderOrderDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;ReceiverOrderDate: YYYY-MM-DD
-    ///   (ISO 8601)&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;
-    ///   CustomerId: string&lt;/li&gt;&lt;li&gt;SenderOrderId: string&lt;/li&gt;&lt;li&gt;ReceiverOrderId: string&lt;/li&gt;
-    ///   &lt;li&gt;DocumentType: &#39;Invoice&#39; or &#39;CreditMemo&#39;&lt;/li&gt;&lt;li&gt;Ibans: string without blanks,
-    ///   comma separated&lt;/li&gt;&lt;li&gt;UstIds: string without blanks, comma separated&lt;/li&gt;&lt;/ul&gt; (required).
-    /// </param>
-    /// <param name="Score">Scored probability. Value between zero and one. (required).</param>
-    /// <param name="X">X-Position according to the document resolution (required).</param>
-    /// <param name="Y">Y-Position according to the document resolution (required).</param>
-    /// <param name="Width">Width according to the document resolution (required).</param>
-    /// <param name="Height">Height according to the document resolution (required).</param>
-    public DetectionResponse(int? Type = default(int?), string TypeName = default(string),
-      string Text = default(string), string Value = default(string), double? Score = default(double?),
-      int? X = default(int?), int? Y = default(int?), int? Width = default(int?), int? Height = default(int?))
-    {
-      // to ensure "Type" is required (not null)
-      if (Type == null)
-        throw new InvalidDataException("Type is a required property for DetectionResponse and cannot be null");
-      this.Type = Type;
-      // to ensure "TypeName" is required (not null)
-      if (TypeName == null)
-        throw new InvalidDataException("TypeName is a required property for DetectionResponse and cannot be null");
-      this.TypeName = TypeName;
-      // to ensure "Value" is required (not null)
-      if (Value == null)
-        throw new InvalidDataException("Value is a required property for DetectionResponse and cannot be null");
-      this.Value = Value;
-      // to ensure "Score" is required (not null)
-      if (Score == null)
-        throw new InvalidDataException("Score is a required property for DetectionResponse and cannot be null");
-      this.Score = Score;
-      // to ensure "X" is required (not null)
-      if (X == null)
-        throw new InvalidDataException("X is a required property for DetectionResponse and cannot be null");
-      this.X = X;
-      // to ensure "Y" is required (not null)
-      if (Y == null)
-        throw new InvalidDataException("Y is a required property for DetectionResponse and cannot be null");
-      this.Y = Y;
-      // to ensure "Width" is required (not null)
-      if (Width == null)
-        throw new InvalidDataException("Width is a required property for DetectionResponse and cannot be null");
-      this.Width = Width;
-      // to ensure "Height" is required (not null)
-      if (Height == null)
-        throw new InvalidDataException("Height is a required property for DetectionResponse and cannot be null");
-      this.Height = Height;
-      this.Text = Text;
-    }
-
-    /// <summary>
-    ///   Predicted invoice detail
-    /// </summary>
-    /// <value>Predicted invoice detail</value>
-    [DataMember(Name = "Type", EmitDefaultValue = false)]
-    public int? Type { get; set; }
-
-    /// <summary>
-    ///   Predicted invoice detail
-    /// </summary>
-    /// <value>Predicted invoice detail</value>
-    [DataMember(Name = "TypeName", EmitDefaultValue = false)]
-    public string TypeName { get; set; }
-
-    /// <summary>
-    ///   The raw text
-    /// </summary>
-    /// <value>The raw text</value>
-    [DataMember(Name = "Text", EmitDefaultValue = false)]
-    public string Text { get; set; }
-
-    /// <summary>
-    ///   Predicted value &lt;br&gt;&lt;br&gt;Formats:&lt;br&gt;&lt;ul&gt;&lt;li&gt;GrandTotalAmount: decimal separator &#39;.
-    ///   &#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;NetAmount: decimal
-    ///   separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;
-    ///   VatAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li
-    ///   &gt;&lt;li&gt;VatRate: decimal separator &#39;.&#39;, no group separator, one decimal digits, e.g. 20.0, 19.0, 10.0
-    ///   &lt;/li&gt;&lt;li&gt;InvoiceDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;DeliveryDate: YYYY-MM-DD (ISO 8601)&lt;
-    ///   /li&gt;&lt;li&gt;SenderOrderDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;ReceiverOrderDate: YYYY-MM-DD (ISO 8601)
-    ///   &lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;CustomerId: string
-    ///   &lt;/li&gt;&lt;li&gt;SenderOrderId: string&lt;/li&gt;&lt;li&gt;ReceiverOrderId: string&lt;/li&gt;&lt;li&gt;
-    ///   DocumentType: &#39;Invoice&#39; or &#39;CreditMemo&#39;&lt;/li&gt;&lt;li&gt;Ibans: string without blanks, comma
-    ///   separated&lt;/li&gt;&lt;li&gt;UstIds: string without blanks, comma separated&lt;/li&gt;&lt;/ul&gt;
-    /// </summary>
-    /// <value>
-    ///   Predicted value &lt;br&gt;&lt;br&gt;Formats:&lt;br&gt;&lt;ul&gt;&lt;li&gt;GrandTotalAmount: decimal separator
-    ///   &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li&gt;NetAmount:
-    ///   decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;/li&gt;&lt;li
-    ///   &gt;VatAmount: decimal separator &#39;.&#39;, no group separator, two decimal digits, e.g. 9.00, 2314.50, -12.99&lt;
-    ///   /li&gt;&lt;li&gt;VatRate: decimal separator &#39;.&#39;, no group separator, one decimal digits, e.g. 20.0, 19.0,
-    ///   10.0&lt;/li&gt;&lt;li&gt;InvoiceDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;DeliveryDate: YYYY-MM-DD (ISO 8601)
-    ///   &lt;/li&gt;&lt;li&gt;SenderOrderDate: YYYY-MM-DD (ISO 8601)&lt;/li&gt;&lt;li&gt;ReceiverOrderDate: YYYY-MM-DD (ISO
-    ///   8601)&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;InvoiceId: string&lt;/li&gt;&lt;li&gt;CustomerId:
-    ///   string&lt;/li&gt;&lt;li&gt;SenderOrderId: string&lt;/li&gt;&lt;li&gt;ReceiverOrderId: string&lt;/li&gt;&lt;li&gt;
-    ///   DocumentType: &#39;Invoice&#39; or &#39;CreditMemo&#39;&lt;/li&gt;&lt;li&gt;Ibans: string without blanks, comma
-    ///   separated&lt;/li&gt;&lt;li&gt;UstIds: string without blanks, comma separated&lt;/li&gt;&lt;/ul&gt;
-    /// </value>
-    [DataMember(Name = "Value", EmitDefaultValue = false)]
-    public string Value { get; set; }
-
-    /// <summary>
-    ///   Scored probability. Value between zero and one.
-    /// </summary>
-    /// <value>Scored probability. Value between zero and one.</value>
-    [DataMember(Name = "Score", EmitDefaultValue = false)]
-    public double? Score { get; set; }
-
-    /// <summary>
-    ///   X-Position according to the document resolution
-    /// </summary>
-    /// <value>X-Position according to the document resolution</value>
-    [DataMember(Name = "X", EmitDefaultValue = false)]
-    public int? X { get; set; }
-
-    /// <summary>
-    ///   Y-Position according to the document resolution
-    /// </summary>
-    /// <value>Y-Position according to the document resolution</value>
-    [DataMember(Name = "Y", EmitDefaultValue = false)]
-    public int? Y { get; set; }
-
-    /// <summary>
-    ///   Width according to the document resolution
-    /// </summary>
-    /// <value>Width according to the document resolution</value>
-    [DataMember(Name = "Width", EmitDefaultValue = false)]
-    public int? Width { get; set; }
-
-    /// <summary>
-    ///   Height according to the document resolution
-    /// </summary>
-    /// <value>Height according to the document resolution</value>
-    [DataMember(Name = "Height", EmitDefaultValue = false)]
-    public int? Height { get; set; }
-
-    /// <summary>
-    ///   Returns true if DetectionResponse instances are equal
-    /// </summary>
-    /// <param name="other">Instance of DetectionResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(DetectionResponse other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        (
-          Type == other.Type ||
-          Type != null &&
-          Type.Equals(other.Type)
-        ) &&
-        (
-          TypeName == other.TypeName ||
-          TypeName != null &&
-          TypeName.Equals(other.TypeName)
-        ) &&
-        (
-          Text == other.Text ||
-          Text != null &&
-          Text.Equals(other.Text)
-        ) &&
-        (
-          Value == other.Value ||
-          Value != null &&
-          Value.Equals(other.Value)
-        ) &&
-        (
-          Score == other.Score ||
-          Score != null &&
-          Score.Equals(other.Score)
-        ) &&
-        (
-          X == other.X ||
-          X != null &&
-          X.Equals(other.X)
-        ) &&
-        (
-          Y == other.Y ||
-          Y != null &&
-          Y.Equals(other.Y)
-        ) &&
-        (
-          Width == other.Width ||
-          Width != null &&
-          Width.Equals(other.Width)
-        ) &&
-        (
-          Height == other.Height ||
-          Height != null &&
-          Height.Equals(other.Height)
-        );
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class DetectionResponse {\n");
-      sb.Append("  Type: ").Append(Type).Append("\n");
-      sb.Append("  TypeName: ").Append(TypeName).Append("\n");
-      sb.Append("  Text: ").Append(Text).Append("\n");
-      sb.Append("  Value: ").Append(Value).Append("\n");
-      sb.Append("  Score: ").Append(Score).Append("\n");
-      sb.Append("  X: ").Append(X).Append("\n");
-      sb.Append("  Y: ").Append(Y).Append("\n");
-      sb.Append("  Width: ").Append(Width).Append("\n");
-      sb.Append("  Height: ").Append(Height).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as DetectionResponse);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (Type != null)
-          hash = hash * 59 + Type.GetHashCode();
-        if (TypeName != null)
-          hash = hash * 59 + TypeName.GetHashCode();
-        if (Text != null)
-          hash = hash * 59 + Text.GetHashCode();
-        if (Value != null)
-          hash = hash * 59 + Value.GetHashCode();
-        if (Score != null)
-          hash = hash * 59 + Score.GetHashCode();
-        if (X != null)
-          hash = hash * 59 + X.GetHashCode();
-        if (Y != null)
-          hash = hash * 59 + Y.GetHashCode();
-        if (Width != null)
-          hash = hash * 59 + Width.GetHashCode();
-        if (Height != null)
-          hash = hash * 59 + Height.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }

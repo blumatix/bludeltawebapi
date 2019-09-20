@@ -9,235 +9,240 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+using System.Linq;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   AddressResponse
-  /// </summary>
-  [DataContract]
-  public class AddressResponse : IEquatable<AddressResponse>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="AddressResponse" /> class.
+    /// AddressResponse
     /// </summary>
-    /// <param name="Street">Street (incl. street number).</param>
-    /// <param name="ZipCode">Zip code / postal code.</param>
-    /// <param name="City">City.</param>
-    /// <param name="Country">Country.</param>
-    /// <param name="X">X-Position according to the document resolution.</param>
-    /// <param name="Y">Y-Position according to the document resolution.</param>
-    /// <param name="Width">Width according to the document resolution.</param>
-    /// <param name="Height">Height according to the document resolution.</param>
-    public AddressResponse(DetailResponse Street = default(DetailResponse),
-      DetailResponse ZipCode = default(DetailResponse), DetailResponse City = default(DetailResponse),
-      DetailResponse Country = default(DetailResponse), int? X = default(int?), int? Y = default(int?),
-      int? Width = default(int?), int? Height = default(int?))
+    [DataContract]
+    public partial class AddressResponse :  IEquatable<AddressResponse>, IValidatableObject
     {
-      this.Street = Street;
-      this.ZipCode = ZipCode;
-      this.City = City;
-      this.Country = Country;
-      this.X = X;
-      this.Y = Y;
-      this.Width = Width;
-      this.Height = Height;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddressResponse" /> class.
+        /// </summary>
+        /// <param name="Street">Street (incl. street number).</param>
+        /// <param name="ZipCode">Zip code / postal code.</param>
+        /// <param name="City">City.</param>
+        /// <param name="Country">Country.</param>
+        /// <param name="X">X-Position according to the document resolution.</param>
+        /// <param name="Y">Y-Position according to the document resolution.</param>
+        /// <param name="Width">Width according to the document resolution.</param>
+        /// <param name="Height">Height according to the document resolution.</param>
+        public AddressResponse(DetailResponse Street = default(DetailResponse), DetailResponse ZipCode = default(DetailResponse), DetailResponse City = default(DetailResponse), DetailResponse Country = default(DetailResponse), int? X = default(int?), int? Y = default(int?), int? Width = default(int?), int? Height = default(int?))
+        {
+            this.Street = Street;
+            this.ZipCode = ZipCode;
+            this.City = City;
+            this.Country = Country;
+            this.X = X;
+            this.Y = Y;
+            this.Width = Width;
+            this.Height = Height;
+        }
+        
+        /// <summary>
+        /// Street (incl. street number)
+        /// </summary>
+        /// <value>Street (incl. street number)</value>
+        [DataMember(Name="Street", EmitDefaultValue=false)]
+        public DetailResponse Street { get; set; }
+
+        /// <summary>
+        /// Zip code / postal code
+        /// </summary>
+        /// <value>Zip code / postal code</value>
+        [DataMember(Name="ZipCode", EmitDefaultValue=false)]
+        public DetailResponse ZipCode { get; set; }
+
+        /// <summary>
+        /// City
+        /// </summary>
+        /// <value>City</value>
+        [DataMember(Name="City", EmitDefaultValue=false)]
+        public DetailResponse City { get; set; }
+
+        /// <summary>
+        /// Country
+        /// </summary>
+        /// <value>Country</value>
+        [DataMember(Name="Country", EmitDefaultValue=false)]
+        public DetailResponse Country { get; set; }
+
+        /// <summary>
+        /// X-Position according to the document resolution
+        /// </summary>
+        /// <value>X-Position according to the document resolution</value>
+        [DataMember(Name="X", EmitDefaultValue=false)]
+        public int? X { get; set; }
+
+        /// <summary>
+        /// Y-Position according to the document resolution
+        /// </summary>
+        /// <value>Y-Position according to the document resolution</value>
+        [DataMember(Name="Y", EmitDefaultValue=false)]
+        public int? Y { get; set; }
+
+        /// <summary>
+        /// Width according to the document resolution
+        /// </summary>
+        /// <value>Width according to the document resolution</value>
+        [DataMember(Name="Width", EmitDefaultValue=false)]
+        public int? Width { get; set; }
+
+        /// <summary>
+        /// Height according to the document resolution
+        /// </summary>
+        /// <value>Height according to the document resolution</value>
+        [DataMember(Name="Height", EmitDefaultValue=false)]
+        public int? Height { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class AddressResponse {\n");
+            sb.Append("  Street: ").Append(Street).Append("\n");
+            sb.Append("  ZipCode: ").Append(ZipCode).Append("\n");
+            sb.Append("  City: ").Append(City).Append("\n");
+            sb.Append("  Country: ").Append(Country).Append("\n");
+            sb.Append("  X: ").Append(X).Append("\n");
+            sb.Append("  Y: ").Append(Y).Append("\n");
+            sb.Append("  Width: ").Append(Width).Append("\n");
+            sb.Append("  Height: ").Append(Height).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as AddressResponse);
+        }
+
+        /// <summary>
+        /// Returns true if AddressResponse instances are equal
+        /// </summary>
+        /// <param name="other">Instance of AddressResponse to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(AddressResponse other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.Street == other.Street ||
+                    this.Street != null &&
+                    this.Street.Equals(other.Street)
+                ) && 
+                (
+                    this.ZipCode == other.ZipCode ||
+                    this.ZipCode != null &&
+                    this.ZipCode.Equals(other.ZipCode)
+                ) && 
+                (
+                    this.City == other.City ||
+                    this.City != null &&
+                    this.City.Equals(other.City)
+                ) && 
+                (
+                    this.Country == other.Country ||
+                    this.Country != null &&
+                    this.Country.Equals(other.Country)
+                ) && 
+                (
+                    this.X == other.X ||
+                    this.X != null &&
+                    this.X.Equals(other.X)
+                ) && 
+                (
+                    this.Y == other.Y ||
+                    this.Y != null &&
+                    this.Y.Equals(other.Y)
+                ) && 
+                (
+                    this.Width == other.Width ||
+                    this.Width != null &&
+                    this.Width.Equals(other.Width)
+                ) && 
+                (
+                    this.Height == other.Height ||
+                    this.Height != null &&
+                    this.Height.Equals(other.Height)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.Street != null)
+                    hash = hash * 59 + this.Street.GetHashCode();
+                if (this.ZipCode != null)
+                    hash = hash * 59 + this.ZipCode.GetHashCode();
+                if (this.City != null)
+                    hash = hash * 59 + this.City.GetHashCode();
+                if (this.Country != null)
+                    hash = hash * 59 + this.Country.GetHashCode();
+                if (this.X != null)
+                    hash = hash * 59 + this.X.GetHashCode();
+                if (this.Y != null)
+                    hash = hash * 59 + this.Y.GetHashCode();
+                if (this.Width != null)
+                    hash = hash * 59 + this.Width.GetHashCode();
+                if (this.Height != null)
+                    hash = hash * 59 + this.Height.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   Street (incl. street number)
-    /// </summary>
-    /// <value>Street (incl. street number)</value>
-    [DataMember(Name = "Street", EmitDefaultValue = false)]
-    public DetailResponse Street { get; set; }
-
-    /// <summary>
-    ///   Zip code / postal code
-    /// </summary>
-    /// <value>Zip code / postal code</value>
-    [DataMember(Name = "ZipCode", EmitDefaultValue = false)]
-    public DetailResponse ZipCode { get; set; }
-
-    /// <summary>
-    ///   City
-    /// </summary>
-    /// <value>City</value>
-    [DataMember(Name = "City", EmitDefaultValue = false)]
-    public DetailResponse City { get; set; }
-
-    /// <summary>
-    ///   Country
-    /// </summary>
-    /// <value>Country</value>
-    [DataMember(Name = "Country", EmitDefaultValue = false)]
-    public DetailResponse Country { get; set; }
-
-    /// <summary>
-    ///   X-Position according to the document resolution
-    /// </summary>
-    /// <value>X-Position according to the document resolution</value>
-    [DataMember(Name = "X", EmitDefaultValue = false)]
-    public int? X { get; set; }
-
-    /// <summary>
-    ///   Y-Position according to the document resolution
-    /// </summary>
-    /// <value>Y-Position according to the document resolution</value>
-    [DataMember(Name = "Y", EmitDefaultValue = false)]
-    public int? Y { get; set; }
-
-    /// <summary>
-    ///   Width according to the document resolution
-    /// </summary>
-    /// <value>Width according to the document resolution</value>
-    [DataMember(Name = "Width", EmitDefaultValue = false)]
-    public int? Width { get; set; }
-
-    /// <summary>
-    ///   Height according to the document resolution
-    /// </summary>
-    /// <value>Height according to the document resolution</value>
-    [DataMember(Name = "Height", EmitDefaultValue = false)]
-    public int? Height { get; set; }
-
-    /// <summary>
-    ///   Returns true if AddressResponse instances are equal
-    /// </summary>
-    /// <param name="other">Instance of AddressResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(AddressResponse other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        (
-          Street == other.Street ||
-          Street != null &&
-          Street.Equals(other.Street)
-        ) &&
-        (
-          ZipCode == other.ZipCode ||
-          ZipCode != null &&
-          ZipCode.Equals(other.ZipCode)
-        ) &&
-        (
-          City == other.City ||
-          City != null &&
-          City.Equals(other.City)
-        ) &&
-        (
-          Country == other.Country ||
-          Country != null &&
-          Country.Equals(other.Country)
-        ) &&
-        (
-          X == other.X ||
-          X != null &&
-          X.Equals(other.X)
-        ) &&
-        (
-          Y == other.Y ||
-          Y != null &&
-          Y.Equals(other.Y)
-        ) &&
-        (
-          Width == other.Width ||
-          Width != null &&
-          Width.Equals(other.Width)
-        ) &&
-        (
-          Height == other.Height ||
-          Height != null &&
-          Height.Equals(other.Height)
-        );
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class AddressResponse {\n");
-      sb.Append("  Street: ").Append(Street).Append("\n");
-      sb.Append("  ZipCode: ").Append(ZipCode).Append("\n");
-      sb.Append("  City: ").Append(City).Append("\n");
-      sb.Append("  Country: ").Append(Country).Append("\n");
-      sb.Append("  X: ").Append(X).Append("\n");
-      sb.Append("  Y: ").Append(Y).Append("\n");
-      sb.Append("  Width: ").Append(Width).Append("\n");
-      sb.Append("  Height: ").Append(Height).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as AddressResponse);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (Street != null)
-          hash = hash * 59 + Street.GetHashCode();
-        if (ZipCode != null)
-          hash = hash * 59 + ZipCode.GetHashCode();
-        if (City != null)
-          hash = hash * 59 + City.GetHashCode();
-        if (Country != null)
-          hash = hash * 59 + Country.GetHashCode();
-        if (X != null)
-          hash = hash * 59 + X.GetHashCode();
-        if (Y != null)
-          hash = hash * 59 + Y.GetHashCode();
-        if (Width != null)
-          hash = hash * 59 + Width.GetHashCode();
-        if (Height != null)
-          hash = hash * 59 + Height.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }

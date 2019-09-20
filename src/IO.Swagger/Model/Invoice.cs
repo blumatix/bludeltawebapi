@@ -9,146 +9,168 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.Serialization;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   Invoice
-  /// </summary>
-  [DataContract]
-  public class Invoice : IEquatable<Invoice>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Invoice" /> class.
+    /// Invoice
     /// </summary>
-    /// <param name="InvoiceId">InvoiceId.</param>
-    /// <param name="Pages">Pages.</param>
-    /// <param name="PredictionResult">PredictionResult.</param>
-    public Invoice(string InvoiceId = default(string), List<Page> Pages = default(List<Page>),
-      DetectInvoiceResponse PredictionResult = default(DetectInvoiceResponse))
+    [DataContract]
+    public partial class Invoice :  IEquatable<Invoice>, IValidatableObject
     {
-      this.InvoiceId = InvoiceId;
-      this.Pages = Pages;
-      this.PredictionResult = PredictionResult;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Invoice" /> class.
+        /// </summary>
+        /// <param name="InvoiceId">InvoiceId.</param>
+        /// <param name="InvoiceState">InvoiceState.</param>
+        /// <param name="Pages">Pages.</param>
+        /// <param name="DetectInvoiceResponse">DetectInvoiceResponse.</param>
+        public Invoice(string InvoiceId = default(string), string InvoiceState = default(string), List<Page> Pages = default(List<Page>), DetectInvoiceResponse DetectInvoiceResponse = default(DetectInvoiceResponse))
+        {
+            this.InvoiceId = InvoiceId;
+            this.InvoiceState = InvoiceState;
+            this.Pages = Pages;
+            this.DetectInvoiceResponse = DetectInvoiceResponse;
+        }
+        
+        /// <summary>
+        /// Gets or Sets InvoiceId
+        /// </summary>
+        [DataMember(Name="InvoiceId", EmitDefaultValue=false)]
+        public string InvoiceId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets InvoiceState
+        /// </summary>
+        [DataMember(Name="InvoiceState", EmitDefaultValue=false)]
+        public string InvoiceState { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Pages
+        /// </summary>
+        [DataMember(Name="Pages", EmitDefaultValue=false)]
+        public List<Page> Pages { get; set; }
+
+        /// <summary>
+        /// Gets or Sets DetectInvoiceResponse
+        /// </summary>
+        [DataMember(Name="DetectInvoiceResponse", EmitDefaultValue=false)]
+        public DetectInvoiceResponse DetectInvoiceResponse { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class Invoice {\n");
+            sb.Append("  InvoiceId: ").Append(InvoiceId).Append("\n");
+            sb.Append("  InvoiceState: ").Append(InvoiceState).Append("\n");
+            sb.Append("  Pages: ").Append(Pages).Append("\n");
+            sb.Append("  DetectInvoiceResponse: ").Append(DetectInvoiceResponse).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Invoice);
+        }
+
+        /// <summary>
+        /// Returns true if Invoice instances are equal
+        /// </summary>
+        /// <param name="other">Instance of Invoice to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(Invoice other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.InvoiceId == other.InvoiceId ||
+                    this.InvoiceId != null &&
+                    this.InvoiceId.Equals(other.InvoiceId)
+                ) && 
+                (
+                    this.InvoiceState == other.InvoiceState ||
+                    this.InvoiceState != null &&
+                    this.InvoiceState.Equals(other.InvoiceState)
+                ) && 
+                (
+                    this.Pages == other.Pages ||
+                    this.Pages != null &&
+                    this.Pages.SequenceEqual(other.Pages)
+                ) && 
+                (
+                    this.DetectInvoiceResponse == other.DetectInvoiceResponse ||
+                    this.DetectInvoiceResponse != null &&
+                    this.DetectInvoiceResponse.Equals(other.DetectInvoiceResponse)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.InvoiceId != null)
+                    hash = hash * 59 + this.InvoiceId.GetHashCode();
+                if (this.InvoiceState != null)
+                    hash = hash * 59 + this.InvoiceState.GetHashCode();
+                if (this.Pages != null)
+                    hash = hash * 59 + this.Pages.GetHashCode();
+                if (this.DetectInvoiceResponse != null)
+                    hash = hash * 59 + this.DetectInvoiceResponse.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   Gets or Sets InvoiceId
-    /// </summary>
-    [DataMember(Name = "InvoiceId", EmitDefaultValue = false)]
-    public string InvoiceId { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets Pages
-    /// </summary>
-    [DataMember(Name = "Pages", EmitDefaultValue = false)]
-    public List<Page> Pages { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets PredictionResult
-    /// </summary>
-    [DataMember(Name = "PredictionResult", EmitDefaultValue = false)]
-    public DetectInvoiceResponse PredictionResult { get; set; }
-
-    /// <summary>
-    ///   Returns true if Invoice instances are equal
-    /// </summary>
-    /// <param name="other">Instance of Invoice to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(Invoice other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        (
-          InvoiceId == other.InvoiceId ||
-          InvoiceId != null &&
-          InvoiceId.Equals(other.InvoiceId)
-        ) &&
-        (
-          Pages == other.Pages ||
-          Pages != null &&
-          Pages.SequenceEqual(other.Pages)
-        ) &&
-        (
-          PredictionResult == other.PredictionResult ||
-          PredictionResult != null &&
-          PredictionResult.Equals(other.PredictionResult)
-        );
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class Invoice {\n");
-      sb.Append("  InvoiceId: ").Append(InvoiceId).Append("\n");
-      sb.Append("  Pages: ").Append(Pages).Append("\n");
-      sb.Append("  PredictionResult: ").Append(PredictionResult).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as Invoice);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (InvoiceId != null)
-          hash = hash * 59 + InvoiceId.GetHashCode();
-        if (Pages != null)
-          hash = hash * 59 + Pages.GetHashCode();
-        if (PredictionResult != null)
-          hash = hash * 59 + PredictionResult.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }

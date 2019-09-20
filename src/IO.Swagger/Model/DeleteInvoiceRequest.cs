@@ -25,25 +25,35 @@ using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// After processing the container (or after navigating to the next container without saving) the container needs to be unlocked.
+    /// DeleteInvoiceRequest
     /// </summary>
     [DataContract]
-    public partial class InvoiceContainerUnlockRequest :  IEquatable<InvoiceContainerUnlockRequest>, IValidatableObject
+    public partial class DeleteInvoiceRequest :  IEquatable<DeleteInvoiceRequest>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvoiceContainerUnlockRequest" /> class.
+        /// Initializes a new instance of the <see cref="DeleteInvoiceRequest" /> class.
         /// </summary>
-        /// <param name="ContainerId">ContainerId.</param>
-        public InvoiceContainerUnlockRequest(string ContainerId = default(string))
+        /// <param name="ContainerId">Id of the container.</param>
+        /// <param name="InvoiceId">Id of invoice which should be deleted.</param>
+        public DeleteInvoiceRequest(string ContainerId = default(string), string InvoiceId = default(string))
         {
             this.ContainerId = ContainerId;
+            this.InvoiceId = InvoiceId;
         }
         
         /// <summary>
-        /// Gets or Sets ContainerId
+        /// Id of the container
         /// </summary>
+        /// <value>Id of the container</value>
         [DataMember(Name="ContainerId", EmitDefaultValue=false)]
         public string ContainerId { get; set; }
+
+        /// <summary>
+        /// Id of invoice which should be deleted
+        /// </summary>
+        /// <value>Id of invoice which should be deleted</value>
+        [DataMember(Name="InvoiceId", EmitDefaultValue=false)]
+        public string InvoiceId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -52,8 +62,9 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class InvoiceContainerUnlockRequest {\n");
+            sb.Append("class DeleteInvoiceRequest {\n");
             sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
+            sb.Append("  InvoiceId: ").Append(InvoiceId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -75,15 +86,15 @@ namespace IO.Swagger.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as InvoiceContainerUnlockRequest);
+            return this.Equals(obj as DeleteInvoiceRequest);
         }
 
         /// <summary>
-        /// Returns true if InvoiceContainerUnlockRequest instances are equal
+        /// Returns true if DeleteInvoiceRequest instances are equal
         /// </summary>
-        /// <param name="other">Instance of InvoiceContainerUnlockRequest to be compared</param>
+        /// <param name="other">Instance of DeleteInvoiceRequest to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(InvoiceContainerUnlockRequest other)
+        public bool Equals(DeleteInvoiceRequest other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
@@ -94,6 +105,11 @@ namespace IO.Swagger.Model
                     this.ContainerId == other.ContainerId ||
                     this.ContainerId != null &&
                     this.ContainerId.Equals(other.ContainerId)
+                ) && 
+                (
+                    this.InvoiceId == other.InvoiceId ||
+                    this.InvoiceId != null &&
+                    this.InvoiceId.Equals(other.InvoiceId)
                 );
         }
 
@@ -110,6 +126,8 @@ namespace IO.Swagger.Model
                 // Suitable nullity checks etc, of course :)
                 if (this.ContainerId != null)
                     hash = hash * 59 + this.ContainerId.GetHashCode();
+                if (this.InvoiceId != null)
+                    hash = hash * 59 + this.InvoiceId.GetHashCode();
                 return hash;
             }
         }

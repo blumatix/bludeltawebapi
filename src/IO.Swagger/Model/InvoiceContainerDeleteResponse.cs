@@ -25,25 +25,48 @@ using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// After processing the container (or after navigating to the next container without saving) the container needs to be unlocked.
+    /// InvoiceContainerDeleteResponse
     /// </summary>
     [DataContract]
-    public partial class InvoiceContainerUnlockRequest :  IEquatable<InvoiceContainerUnlockRequest>, IValidatableObject
+    public partial class InvoiceContainerDeleteResponse :  IEquatable<InvoiceContainerDeleteResponse>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvoiceContainerUnlockRequest" /> class.
+        /// Initializes a new instance of the <see cref="InvoiceContainerDeleteResponse" /> class.
         /// </summary>
-        /// <param name="ContainerId">ContainerId.</param>
-        public InvoiceContainerUnlockRequest(string ContainerId = default(string))
+        [JsonConstructorAttribute]
+        protected InvoiceContainerDeleteResponse() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvoiceContainerDeleteResponse" /> class.
+        /// </summary>
+        /// <param name="State">0 &#x3D; Ok, 1 &#x3D; Failed (required).</param>
+        /// <param name="Message">Error message in case of an error.</param>
+        public InvoiceContainerDeleteResponse(int? State = default(int?), string Message = default(string))
         {
-            this.ContainerId = ContainerId;
+            // to ensure "State" is required (not null)
+            if (State == null)
+            {
+                throw new InvalidDataException("State is a required property for InvoiceContainerDeleteResponse and cannot be null");
+            }
+            else
+            {
+                this.State = State;
+            }
+            this.Message = Message;
         }
         
         /// <summary>
-        /// Gets or Sets ContainerId
+        /// 0 &#x3D; Ok, 1 &#x3D; Failed
         /// </summary>
-        [DataMember(Name="ContainerId", EmitDefaultValue=false)]
-        public string ContainerId { get; set; }
+        /// <value>0 &#x3D; Ok, 1 &#x3D; Failed</value>
+        [DataMember(Name="State", EmitDefaultValue=false)]
+        public int? State { get; set; }
+
+        /// <summary>
+        /// Error message in case of an error
+        /// </summary>
+        /// <value>Error message in case of an error</value>
+        [DataMember(Name="Message", EmitDefaultValue=false)]
+        public string Message { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -52,8 +75,9 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class InvoiceContainerUnlockRequest {\n");
-            sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
+            sb.Append("class InvoiceContainerDeleteResponse {\n");
+            sb.Append("  State: ").Append(State).Append("\n");
+            sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -75,15 +99,15 @@ namespace IO.Swagger.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as InvoiceContainerUnlockRequest);
+            return this.Equals(obj as InvoiceContainerDeleteResponse);
         }
 
         /// <summary>
-        /// Returns true if InvoiceContainerUnlockRequest instances are equal
+        /// Returns true if InvoiceContainerDeleteResponse instances are equal
         /// </summary>
-        /// <param name="other">Instance of InvoiceContainerUnlockRequest to be compared</param>
+        /// <param name="other">Instance of InvoiceContainerDeleteResponse to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(InvoiceContainerUnlockRequest other)
+        public bool Equals(InvoiceContainerDeleteResponse other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
@@ -91,9 +115,14 @@ namespace IO.Swagger.Model
 
             return 
                 (
-                    this.ContainerId == other.ContainerId ||
-                    this.ContainerId != null &&
-                    this.ContainerId.Equals(other.ContainerId)
+                    this.State == other.State ||
+                    this.State != null &&
+                    this.State.Equals(other.State)
+                ) && 
+                (
+                    this.Message == other.Message ||
+                    this.Message != null &&
+                    this.Message.Equals(other.Message)
                 );
         }
 
@@ -108,8 +137,10 @@ namespace IO.Swagger.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.ContainerId != null)
-                    hash = hash * 59 + this.ContainerId.GetHashCode();
+                if (this.State != null)
+                    hash = hash * 59 + this.State.GetHashCode();
+                if (this.Message != null)
+                    hash = hash * 59 + this.Message.GetHashCode();
                 return hash;
             }
         }

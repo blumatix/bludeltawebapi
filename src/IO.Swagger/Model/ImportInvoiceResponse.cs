@@ -9,210 +9,247 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+using System.Linq;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   ImportInvoiceResponse
-  /// </summary>
-  [DataContract]
-  public class ImportInvoiceResponse : IEquatable<ImportInvoiceResponse>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ImportInvoiceResponse" /> class.
+    /// ImportInvoiceResponse
     /// </summary>
-    /// <param name="State">State.</param>
-    /// <param name="Message">Message.</param>
-    /// <param name="Available">Available.</param>
-    /// <param name="InvoiceId">InvoiceId.</param>
-    /// <param name="FileName">FileName.</param>
-    /// <param name="File">File.</param>
-    /// <param name="DetectInvoiceResponse">DetectInvoiceResponse.</param>
-    public ImportInvoiceResponse(int? State = default(int?), string Message = default(string),
-      bool? Available = default(bool?), string InvoiceId = default(string), string FileName = default(string),
-      string File = default(string), DetectInvoiceResponse DetectInvoiceResponse = default(DetectInvoiceResponse))
+    [DataContract]
+    public partial class ImportInvoiceResponse :  IEquatable<ImportInvoiceResponse>, IValidatableObject
     {
-      this.State = State;
-      this.Message = Message;
-      this.Available = Available;
-      this.InvoiceId = InvoiceId;
-      this.FileName = FileName;
-      this.File = File;
-      this.DetectInvoiceResponse = DetectInvoiceResponse;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImportInvoiceResponse" /> class.
+        /// </summary>
+        [JsonConstructorAttribute]
+        protected ImportInvoiceResponse() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImportInvoiceResponse" /> class.
+        /// </summary>
+        /// <param name="Available">Available.</param>
+        /// <param name="ApiIdentifier">ApiIdentifier.</param>
+        /// <param name="InvoiceId">InvoiceId.</param>
+        /// <param name="FileName">FileName.</param>
+        /// <param name="File">File.</param>
+        /// <param name="DetectInvoiceResponse">DetectInvoiceResponse.</param>
+        /// <param name="State">0 &#x3D; Ok, 1 &#x3D; Failed (required).</param>
+        /// <param name="Message">Error message in case of an error.</param>
+        public ImportInvoiceResponse(bool? Available = default(bool?), string ApiIdentifier = default(string), string InvoiceId = default(string), string FileName = default(string), string File = default(string), DetectInvoiceResponse DetectInvoiceResponse = default(DetectInvoiceResponse), int? State = default(int?), string Message = default(string))
+        {
+            // to ensure "State" is required (not null)
+            if (State == null)
+            {
+                throw new InvalidDataException("State is a required property for ImportInvoiceResponse and cannot be null");
+            }
+            else
+            {
+                this.State = State;
+            }
+            this.Available = Available;
+            this.ApiIdentifier = ApiIdentifier;
+            this.InvoiceId = InvoiceId;
+            this.FileName = FileName;
+            this.File = File;
+            this.DetectInvoiceResponse = DetectInvoiceResponse;
+            this.Message = Message;
+        }
+        
+        /// <summary>
+        /// Gets or Sets Available
+        /// </summary>
+        [DataMember(Name="Available", EmitDefaultValue=false)]
+        public bool? Available { get; set; }
+
+        /// <summary>
+        /// Gets or Sets ApiIdentifier
+        /// </summary>
+        [DataMember(Name="ApiIdentifier", EmitDefaultValue=false)]
+        public string ApiIdentifier { get; set; }
+
+        /// <summary>
+        /// Gets or Sets InvoiceId
+        /// </summary>
+        [DataMember(Name="InvoiceId", EmitDefaultValue=false)]
+        public string InvoiceId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets FileName
+        /// </summary>
+        [DataMember(Name="FileName", EmitDefaultValue=false)]
+        public string FileName { get; set; }
+
+        /// <summary>
+        /// Gets or Sets File
+        /// </summary>
+        [DataMember(Name="File", EmitDefaultValue=false)]
+        public string File { get; set; }
+
+        /// <summary>
+        /// Gets or Sets DetectInvoiceResponse
+        /// </summary>
+        [DataMember(Name="DetectInvoiceResponse", EmitDefaultValue=false)]
+        public DetectInvoiceResponse DetectInvoiceResponse { get; set; }
+
+        /// <summary>
+        /// 0 &#x3D; Ok, 1 &#x3D; Failed
+        /// </summary>
+        /// <value>0 &#x3D; Ok, 1 &#x3D; Failed</value>
+        [DataMember(Name="State", EmitDefaultValue=false)]
+        public int? State { get; set; }
+
+        /// <summary>
+        /// Error message in case of an error
+        /// </summary>
+        /// <value>Error message in case of an error</value>
+        [DataMember(Name="Message", EmitDefaultValue=false)]
+        public string Message { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class ImportInvoiceResponse {\n");
+            sb.Append("  Available: ").Append(Available).Append("\n");
+            sb.Append("  ApiIdentifier: ").Append(ApiIdentifier).Append("\n");
+            sb.Append("  InvoiceId: ").Append(InvoiceId).Append("\n");
+            sb.Append("  FileName: ").Append(FileName).Append("\n");
+            sb.Append("  File: ").Append(File).Append("\n");
+            sb.Append("  DetectInvoiceResponse: ").Append(DetectInvoiceResponse).Append("\n");
+            sb.Append("  State: ").Append(State).Append("\n");
+            sb.Append("  Message: ").Append(Message).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ImportInvoiceResponse);
+        }
+
+        /// <summary>
+        /// Returns true if ImportInvoiceResponse instances are equal
+        /// </summary>
+        /// <param name="other">Instance of ImportInvoiceResponse to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(ImportInvoiceResponse other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.Available == other.Available ||
+                    this.Available != null &&
+                    this.Available.Equals(other.Available)
+                ) && 
+                (
+                    this.ApiIdentifier == other.ApiIdentifier ||
+                    this.ApiIdentifier != null &&
+                    this.ApiIdentifier.Equals(other.ApiIdentifier)
+                ) && 
+                (
+                    this.InvoiceId == other.InvoiceId ||
+                    this.InvoiceId != null &&
+                    this.InvoiceId.Equals(other.InvoiceId)
+                ) && 
+                (
+                    this.FileName == other.FileName ||
+                    this.FileName != null &&
+                    this.FileName.Equals(other.FileName)
+                ) && 
+                (
+                    this.File == other.File ||
+                    this.File != null &&
+                    this.File.Equals(other.File)
+                ) && 
+                (
+                    this.DetectInvoiceResponse == other.DetectInvoiceResponse ||
+                    this.DetectInvoiceResponse != null &&
+                    this.DetectInvoiceResponse.Equals(other.DetectInvoiceResponse)
+                ) && 
+                (
+                    this.State == other.State ||
+                    this.State != null &&
+                    this.State.Equals(other.State)
+                ) && 
+                (
+                    this.Message == other.Message ||
+                    this.Message != null &&
+                    this.Message.Equals(other.Message)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.Available != null)
+                    hash = hash * 59 + this.Available.GetHashCode();
+                if (this.ApiIdentifier != null)
+                    hash = hash * 59 + this.ApiIdentifier.GetHashCode();
+                if (this.InvoiceId != null)
+                    hash = hash * 59 + this.InvoiceId.GetHashCode();
+                if (this.FileName != null)
+                    hash = hash * 59 + this.FileName.GetHashCode();
+                if (this.File != null)
+                    hash = hash * 59 + this.File.GetHashCode();
+                if (this.DetectInvoiceResponse != null)
+                    hash = hash * 59 + this.DetectInvoiceResponse.GetHashCode();
+                if (this.State != null)
+                    hash = hash * 59 + this.State.GetHashCode();
+                if (this.Message != null)
+                    hash = hash * 59 + this.Message.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   Gets or Sets State
-    /// </summary>
-    [DataMember(Name = "State", EmitDefaultValue = false)]
-    public int? State { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets Message
-    /// </summary>
-    [DataMember(Name = "Message", EmitDefaultValue = false)]
-    public string Message { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets Available
-    /// </summary>
-    [DataMember(Name = "Available", EmitDefaultValue = false)]
-    public bool? Available { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets InvoiceId
-    /// </summary>
-    [DataMember(Name = "InvoiceId", EmitDefaultValue = false)]
-    public string InvoiceId { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets FileName
-    /// </summary>
-    [DataMember(Name = "FileName", EmitDefaultValue = false)]
-    public string FileName { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets File
-    /// </summary>
-    [DataMember(Name = "File", EmitDefaultValue = false)]
-    public string File { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets DetectInvoiceResponse
-    /// </summary>
-    [DataMember(Name = "DetectInvoiceResponse", EmitDefaultValue = false)]
-    public DetectInvoiceResponse DetectInvoiceResponse { get; set; }
-
-    /// <summary>
-    ///   Returns true if ImportInvoiceResponse instances are equal
-    /// </summary>
-    /// <param name="other">Instance of ImportInvoiceResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(ImportInvoiceResponse other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        (
-          State == other.State ||
-          State != null &&
-          State.Equals(other.State)
-        ) &&
-        (
-          Message == other.Message ||
-          Message != null &&
-          Message.Equals(other.Message)
-        ) &&
-        (
-          Available == other.Available ||
-          Available != null &&
-          Available.Equals(other.Available)
-        ) &&
-        (
-          InvoiceId == other.InvoiceId ||
-          InvoiceId != null &&
-          InvoiceId.Equals(other.InvoiceId)
-        ) &&
-        (
-          FileName == other.FileName ||
-          FileName != null &&
-          FileName.Equals(other.FileName)
-        ) &&
-        (
-          File == other.File ||
-          File != null &&
-          File.Equals(other.File)
-        ) &&
-        (
-          DetectInvoiceResponse == other.DetectInvoiceResponse ||
-          DetectInvoiceResponse != null &&
-          DetectInvoiceResponse.Equals(other.DetectInvoiceResponse)
-        );
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class ImportInvoiceResponse {\n");
-      sb.Append("  State: ").Append(State).Append("\n");
-      sb.Append("  Message: ").Append(Message).Append("\n");
-      sb.Append("  Available: ").Append(Available).Append("\n");
-      sb.Append("  InvoiceId: ").Append(InvoiceId).Append("\n");
-      sb.Append("  FileName: ").Append(FileName).Append("\n");
-      sb.Append("  File: ").Append(File).Append("\n");
-      sb.Append("  DetectInvoiceResponse: ").Append(DetectInvoiceResponse).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as ImportInvoiceResponse);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (State != null)
-          hash = hash * 59 + State.GetHashCode();
-        if (Message != null)
-          hash = hash * 59 + Message.GetHashCode();
-        if (Available != null)
-          hash = hash * 59 + Available.GetHashCode();
-        if (InvoiceId != null)
-          hash = hash * 59 + InvoiceId.GetHashCode();
-        if (FileName != null)
-          hash = hash * 59 + FileName.GetHashCode();
-        if (File != null)
-          hash = hash * 59 + File.GetHashCode();
-        if (DetectInvoiceResponse != null)
-          hash = hash * 59 + DetectInvoiceResponse.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }

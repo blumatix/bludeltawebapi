@@ -9,166 +9,172 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.Serialization;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   The Access Token is used in all following API calls as authentication token
-  /// </summary>
-  [DataContract]
-  public class AccessTokenRequest : IEquatable<AccessTokenRequest>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="AccessTokenRequest" /> class.
+    /// The Access Token is used in all following API calls as authentication token
     /// </summary>
-    /// <param name="Name">The name of the user.</param>
-    /// <param name="Description">Optional description.</param>
-    /// <param name="TimeoutSeconds">Expiration timeout. Will be reset with every request..</param>
-    /// <param name="ApiIdentifier">A list of ApiIdentifiers for which the token should be generated..</param>
-    public AccessTokenRequest(string Name = default(string), string Description = default(string),
-      int? TimeoutSeconds = default(int?), List<string> ApiIdentifier = default(List<string>))
+    [DataContract]
+    public partial class AccessTokenRequest :  IEquatable<AccessTokenRequest>, IValidatableObject
     {
-      this.Name = Name;
-      this.Description = Description;
-      this.TimeoutSeconds = TimeoutSeconds;
-      this.ApiIdentifier = ApiIdentifier;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccessTokenRequest" /> class.
+        /// </summary>
+        /// <param name="Name">The name of the user.</param>
+        /// <param name="Description">Optional description.</param>
+        /// <param name="TimeoutSeconds">Expiration timeout. Will be reset with every request..</param>
+        /// <param name="ApiIdentifier">A list of ApiIdentifiers for which the token should be generated..</param>
+        public AccessTokenRequest(string Name = default(string), string Description = default(string), int? TimeoutSeconds = default(int?), List<string> ApiIdentifier = default(List<string>))
+        {
+            this.Name = Name;
+            this.Description = Description;
+            this.TimeoutSeconds = TimeoutSeconds;
+            this.ApiIdentifier = ApiIdentifier;
+        }
+        
+        /// <summary>
+        /// The name of the user
+        /// </summary>
+        /// <value>The name of the user</value>
+        [DataMember(Name="Name", EmitDefaultValue=false)]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Optional description
+        /// </summary>
+        /// <value>Optional description</value>
+        [DataMember(Name="Description", EmitDefaultValue=false)]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Expiration timeout. Will be reset with every request.
+        /// </summary>
+        /// <value>Expiration timeout. Will be reset with every request.</value>
+        [DataMember(Name="TimeoutSeconds", EmitDefaultValue=false)]
+        public int? TimeoutSeconds { get; set; }
+
+        /// <summary>
+        /// A list of ApiIdentifiers for which the token should be generated.
+        /// </summary>
+        /// <value>A list of ApiIdentifiers for which the token should be generated.</value>
+        [DataMember(Name="ApiIdentifier", EmitDefaultValue=false)]
+        public List<string> ApiIdentifier { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class AccessTokenRequest {\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  TimeoutSeconds: ").Append(TimeoutSeconds).Append("\n");
+            sb.Append("  ApiIdentifier: ").Append(ApiIdentifier).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as AccessTokenRequest);
+        }
+
+        /// <summary>
+        /// Returns true if AccessTokenRequest instances are equal
+        /// </summary>
+        /// <param name="other">Instance of AccessTokenRequest to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(AccessTokenRequest other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
+                ) && 
+                (
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
+                ) && 
+                (
+                    this.TimeoutSeconds == other.TimeoutSeconds ||
+                    this.TimeoutSeconds != null &&
+                    this.TimeoutSeconds.Equals(other.TimeoutSeconds)
+                ) && 
+                (
+                    this.ApiIdentifier == other.ApiIdentifier ||
+                    this.ApiIdentifier != null &&
+                    this.ApiIdentifier.SequenceEqual(other.ApiIdentifier)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.Name != null)
+                    hash = hash * 59 + this.Name.GetHashCode();
+                if (this.Description != null)
+                    hash = hash * 59 + this.Description.GetHashCode();
+                if (this.TimeoutSeconds != null)
+                    hash = hash * 59 + this.TimeoutSeconds.GetHashCode();
+                if (this.ApiIdentifier != null)
+                    hash = hash * 59 + this.ApiIdentifier.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   The name of the user
-    /// </summary>
-    /// <value>The name of the user</value>
-    [DataMember(Name = "Name", EmitDefaultValue = false)]
-    public string Name { get; set; }
-
-    /// <summary>
-    ///   Optional description
-    /// </summary>
-    /// <value>Optional description</value>
-    [DataMember(Name = "Description", EmitDefaultValue = false)]
-    public string Description { get; set; }
-
-    /// <summary>
-    ///   Expiration timeout. Will be reset with every request.
-    /// </summary>
-    /// <value>Expiration timeout. Will be reset with every request.</value>
-    [DataMember(Name = "TimeoutSeconds", EmitDefaultValue = false)]
-    public int? TimeoutSeconds { get; set; }
-
-    /// <summary>
-    ///   A list of ApiIdentifiers for which the token should be generated.
-    /// </summary>
-    /// <value>A list of ApiIdentifiers for which the token should be generated.</value>
-    [DataMember(Name = "ApiIdentifier", EmitDefaultValue = false)]
-    public List<string> ApiIdentifier { get; set; }
-
-    /// <summary>
-    ///   Returns true if AccessTokenRequest instances are equal
-    /// </summary>
-    /// <param name="other">Instance of AccessTokenRequest to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(AccessTokenRequest other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        (
-          Name == other.Name ||
-          Name != null &&
-          Name.Equals(other.Name)
-        ) &&
-        (
-          Description == other.Description ||
-          Description != null &&
-          Description.Equals(other.Description)
-        ) &&
-        (
-          TimeoutSeconds == other.TimeoutSeconds ||
-          TimeoutSeconds != null &&
-          TimeoutSeconds.Equals(other.TimeoutSeconds)
-        ) &&
-        (
-          ApiIdentifier == other.ApiIdentifier ||
-          ApiIdentifier != null &&
-          ApiIdentifier.SequenceEqual(other.ApiIdentifier)
-        );
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class AccessTokenRequest {\n");
-      sb.Append("  Name: ").Append(Name).Append("\n");
-      sb.Append("  Description: ").Append(Description).Append("\n");
-      sb.Append("  TimeoutSeconds: ").Append(TimeoutSeconds).Append("\n");
-      sb.Append("  ApiIdentifier: ").Append(ApiIdentifier).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as AccessTokenRequest);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (Name != null)
-          hash = hash * 59 + Name.GetHashCode();
-        if (Description != null)
-          hash = hash * 59 + Description.GetHashCode();
-        if (TimeoutSeconds != null)
-          hash = hash * 59 + TimeoutSeconds.GetHashCode();
-        if (ApiIdentifier != null)
-          hash = hash * 59 + ApiIdentifier.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }

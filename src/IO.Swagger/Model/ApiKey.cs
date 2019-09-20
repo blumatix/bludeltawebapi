@@ -9,145 +9,159 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   ApiKey
-  /// </summary>
-  [DataContract]
-  public class ApiKey : IEquatable<ApiKey>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ApiKey" /> class.
+    /// ApiKey
     /// </summary>
-    [JsonConstructor]
-    protected ApiKey()
+    [DataContract]
+    public partial class ApiKey :  IEquatable<ApiKey>, IValidatableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApiKey" /> class.
+        /// </summary>
+        [JsonConstructorAttribute]
+        protected ApiKey() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApiKey" /> class.
+        /// </summary>
+        /// <param name="Name">ApiKey name. Partner name (required).</param>
+        /// <param name="Key">ApiKey (required).</param>
+        public ApiKey(string Name = default(string), string Key = default(string))
+        {
+            // to ensure "Name" is required (not null)
+            if (Name == null)
+            {
+                throw new InvalidDataException("Name is a required property for ApiKey and cannot be null");
+            }
+            else
+            {
+                this.Name = Name;
+            }
+            // to ensure "Key" is required (not null)
+            if (Key == null)
+            {
+                throw new InvalidDataException("Key is a required property for ApiKey and cannot be null");
+            }
+            else
+            {
+                this.Key = Key;
+            }
+        }
+        
+        /// <summary>
+        /// ApiKey name. Partner name
+        /// </summary>
+        /// <value>ApiKey name. Partner name</value>
+        [DataMember(Name="Name", EmitDefaultValue=false)]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// ApiKey
+        /// </summary>
+        /// <value>ApiKey</value>
+        [DataMember(Name="Key", EmitDefaultValue=false)]
+        public string Key { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class ApiKey {\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Key: ").Append(Key).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ApiKey);
+        }
+
+        /// <summary>
+        /// Returns true if ApiKey instances are equal
+        /// </summary>
+        /// <param name="other">Instance of ApiKey to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(ApiKey other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
+                ) && 
+                (
+                    this.Key == other.Key ||
+                    this.Key != null &&
+                    this.Key.Equals(other.Key)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.Name != null)
+                    hash = hash * 59 + this.Name.GetHashCode();
+                if (this.Key != null)
+                    hash = hash * 59 + this.Key.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="ApiKey" /> class.
-    /// </summary>
-    /// <param name="Name">ApiKey name. Partner name (required).</param>
-    /// <param name="Key">ApiKey (required).</param>
-    public ApiKey(string Name = default(string), string Key = default(string))
-    {
-      // to ensure "Name" is required (not null)
-      if (Name == null)
-        throw new InvalidDataException("Name is a required property for ApiKey and cannot be null");
-      this.Name = Name;
-      // to ensure "Key" is required (not null)
-      if (Key == null)
-        throw new InvalidDataException("Key is a required property for ApiKey and cannot be null");
-      this.Key = Key;
-    }
-
-    /// <summary>
-    ///   ApiKey name. Partner name
-    /// </summary>
-    /// <value>ApiKey name. Partner name</value>
-    [DataMember(Name = "Name", EmitDefaultValue = false)]
-    public string Name { get; set; }
-
-    /// <summary>
-    ///   ApiKey
-    /// </summary>
-    /// <value>ApiKey</value>
-    [DataMember(Name = "Key", EmitDefaultValue = false)]
-    public string Key { get; set; }
-
-    /// <summary>
-    ///   Returns true if ApiKey instances are equal
-    /// </summary>
-    /// <param name="other">Instance of ApiKey to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(ApiKey other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        (
-          Name == other.Name ||
-          Name != null &&
-          Name.Equals(other.Name)
-        ) &&
-        (
-          Key == other.Key ||
-          Key != null &&
-          Key.Equals(other.Key)
-        );
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class ApiKey {\n");
-      sb.Append("  Name: ").Append(Name).Append("\n");
-      sb.Append("  Key: ").Append(Key).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as ApiKey);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (Name != null)
-          hash = hash * 59 + Name.GetHashCode();
-        if (Key != null)
-          hash = hash * 59 + Key.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }

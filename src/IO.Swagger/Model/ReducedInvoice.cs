@@ -9,129 +9,136 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.Serialization;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   ReducedInvoice
-  /// </summary>
-  [DataContract]
-  public class ReducedInvoice : IEquatable<ReducedInvoice>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ReducedInvoice" /> class.
+    /// ReducedInvoice
     /// </summary>
-    /// <param name="InvoiceId">InvoiceId.</param>
-    /// <param name="Pages">Pages.</param>
-    public ReducedInvoice(string InvoiceId = default(string), List<ReducedPage> Pages = default(List<ReducedPage>))
+    [DataContract]
+    public partial class ReducedInvoice :  IEquatable<ReducedInvoice>, IValidatableObject
     {
-      this.InvoiceId = InvoiceId;
-      this.Pages = Pages;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReducedInvoice" /> class.
+        /// </summary>
+        /// <param name="InvoiceId">InvoiceId.</param>
+        /// <param name="Pages">Pages.</param>
+        public ReducedInvoice(string InvoiceId = default(string), List<ReducedPage> Pages = default(List<ReducedPage>))
+        {
+            this.InvoiceId = InvoiceId;
+            this.Pages = Pages;
+        }
+        
+        /// <summary>
+        /// Gets or Sets InvoiceId
+        /// </summary>
+        [DataMember(Name="InvoiceId", EmitDefaultValue=false)]
+        public string InvoiceId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Pages
+        /// </summary>
+        [DataMember(Name="Pages", EmitDefaultValue=false)]
+        public List<ReducedPage> Pages { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class ReducedInvoice {\n");
+            sb.Append("  InvoiceId: ").Append(InvoiceId).Append("\n");
+            sb.Append("  Pages: ").Append(Pages).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ReducedInvoice);
+        }
+
+        /// <summary>
+        /// Returns true if ReducedInvoice instances are equal
+        /// </summary>
+        /// <param name="other">Instance of ReducedInvoice to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(ReducedInvoice other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.InvoiceId == other.InvoiceId ||
+                    this.InvoiceId != null &&
+                    this.InvoiceId.Equals(other.InvoiceId)
+                ) && 
+                (
+                    this.Pages == other.Pages ||
+                    this.Pages != null &&
+                    this.Pages.SequenceEqual(other.Pages)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.InvoiceId != null)
+                    hash = hash * 59 + this.InvoiceId.GetHashCode();
+                if (this.Pages != null)
+                    hash = hash * 59 + this.Pages.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   Gets or Sets InvoiceId
-    /// </summary>
-    [DataMember(Name = "InvoiceId", EmitDefaultValue = false)]
-    public string InvoiceId { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets Pages
-    /// </summary>
-    [DataMember(Name = "Pages", EmitDefaultValue = false)]
-    public List<ReducedPage> Pages { get; set; }
-
-    /// <summary>
-    ///   Returns true if ReducedInvoice instances are equal
-    /// </summary>
-    /// <param name="other">Instance of ReducedInvoice to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(ReducedInvoice other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        (
-          InvoiceId == other.InvoiceId ||
-          InvoiceId != null &&
-          InvoiceId.Equals(other.InvoiceId)
-        ) &&
-        (
-          Pages == other.Pages ||
-          Pages != null &&
-          Pages.SequenceEqual(other.Pages)
-        );
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class ReducedInvoice {\n");
-      sb.Append("  InvoiceId: ").Append(InvoiceId).Append("\n");
-      sb.Append("  Pages: ").Append(Pages).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as ReducedInvoice);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (InvoiceId != null)
-          hash = hash * 59 + InvoiceId.GetHashCode();
-        if (Pages != null)
-          hash = hash * 59 + Pages.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }

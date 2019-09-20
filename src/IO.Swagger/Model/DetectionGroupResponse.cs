@@ -9,164 +9,176 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   DetectionGroupResponse
-  /// </summary>
-  [DataContract]
-  public class DetectionGroupResponse : IEquatable<DetectionGroupResponse>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="DetectionGroupResponse" /> class.
+    /// DetectionGroupResponse
     /// </summary>
-    [JsonConstructor]
-    protected DetectionGroupResponse()
+    [DataContract]
+    public partial class DetectionGroupResponse :  IEquatable<DetectionGroupResponse>, IValidatableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DetectionGroupResponse" /> class.
+        /// </summary>
+        [JsonConstructorAttribute]
+        protected DetectionGroupResponse() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DetectionGroupResponse" /> class.
+        /// </summary>
+        /// <param name="Type">Predicted invoice detail (required).</param>
+        /// <param name="TypeName">Predicted invoice detail (required).</param>
+        /// <param name="InvoiceDetailTypePredictions">List of Predictions - One for each predicted invoice detail..</param>
+        public DetectionGroupResponse(int? Type = default(int?), string TypeName = default(string), List<DetectionResponse> InvoiceDetailTypePredictions = default(List<DetectionResponse>))
+        {
+            // to ensure "Type" is required (not null)
+            if (Type == null)
+            {
+                throw new InvalidDataException("Type is a required property for DetectionGroupResponse and cannot be null");
+            }
+            else
+            {
+                this.Type = Type;
+            }
+            // to ensure "TypeName" is required (not null)
+            if (TypeName == null)
+            {
+                throw new InvalidDataException("TypeName is a required property for DetectionGroupResponse and cannot be null");
+            }
+            else
+            {
+                this.TypeName = TypeName;
+            }
+            this.InvoiceDetailTypePredictions = InvoiceDetailTypePredictions;
+        }
+        
+        /// <summary>
+        /// Predicted invoice detail
+        /// </summary>
+        /// <value>Predicted invoice detail</value>
+        [DataMember(Name="Type", EmitDefaultValue=false)]
+        public int? Type { get; set; }
+
+        /// <summary>
+        /// Predicted invoice detail
+        /// </summary>
+        /// <value>Predicted invoice detail</value>
+        [DataMember(Name="TypeName", EmitDefaultValue=false)]
+        public string TypeName { get; set; }
+
+        /// <summary>
+        /// List of Predictions - One for each predicted invoice detail.
+        /// </summary>
+        /// <value>List of Predictions - One for each predicted invoice detail.</value>
+        [DataMember(Name="InvoiceDetailTypePredictions", EmitDefaultValue=false)]
+        public List<DetectionResponse> InvoiceDetailTypePredictions { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class DetectionGroupResponse {\n");
+            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  TypeName: ").Append(TypeName).Append("\n");
+            sb.Append("  InvoiceDetailTypePredictions: ").Append(InvoiceDetailTypePredictions).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DetectionGroupResponse);
+        }
+
+        /// <summary>
+        /// Returns true if DetectionGroupResponse instances are equal
+        /// </summary>
+        /// <param name="other">Instance of DetectionGroupResponse to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(DetectionGroupResponse other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
+                ) && 
+                (
+                    this.TypeName == other.TypeName ||
+                    this.TypeName != null &&
+                    this.TypeName.Equals(other.TypeName)
+                ) && 
+                (
+                    this.InvoiceDetailTypePredictions == other.InvoiceDetailTypePredictions ||
+                    this.InvoiceDetailTypePredictions != null &&
+                    this.InvoiceDetailTypePredictions.SequenceEqual(other.InvoiceDetailTypePredictions)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.Type != null)
+                    hash = hash * 59 + this.Type.GetHashCode();
+                if (this.TypeName != null)
+                    hash = hash * 59 + this.TypeName.GetHashCode();
+                if (this.InvoiceDetailTypePredictions != null)
+                    hash = hash * 59 + this.InvoiceDetailTypePredictions.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="DetectionGroupResponse" /> class.
-    /// </summary>
-    /// <param name="Type">Predicted invoice detail (required).</param>
-    /// <param name="TypeName">Predicted invoice detail (required).</param>
-    /// <param name="InvoiceDetailTypePredictions">List of Predictions - One for each predicted invoice detail..</param>
-    public DetectionGroupResponse(int? Type = default(int?), string TypeName = default(string),
-      List<DetectionResponse> InvoiceDetailTypePredictions = default(List<DetectionResponse>))
-    {
-      // to ensure "Type" is required (not null)
-      if (Type == null)
-        throw new InvalidDataException("Type is a required property for DetectionGroupResponse and cannot be null");
-      this.Type = Type;
-      // to ensure "TypeName" is required (not null)
-      if (TypeName == null)
-        throw new InvalidDataException("TypeName is a required property for DetectionGroupResponse and cannot be null");
-      this.TypeName = TypeName;
-      this.InvoiceDetailTypePredictions = InvoiceDetailTypePredictions;
-    }
-
-    /// <summary>
-    ///   Predicted invoice detail
-    /// </summary>
-    /// <value>Predicted invoice detail</value>
-    [DataMember(Name = "Type", EmitDefaultValue = false)]
-    public int? Type { get; set; }
-
-    /// <summary>
-    ///   Predicted invoice detail
-    /// </summary>
-    /// <value>Predicted invoice detail</value>
-    [DataMember(Name = "TypeName", EmitDefaultValue = false)]
-    public string TypeName { get; set; }
-
-    /// <summary>
-    ///   List of Predictions - One for each predicted invoice detail.
-    /// </summary>
-    /// <value>List of Predictions - One for each predicted invoice detail.</value>
-    [DataMember(Name = "InvoiceDetailTypePredictions", EmitDefaultValue = false)]
-    public List<DetectionResponse> InvoiceDetailTypePredictions { get; set; }
-
-    /// <summary>
-    ///   Returns true if DetectionGroupResponse instances are equal
-    /// </summary>
-    /// <param name="other">Instance of DetectionGroupResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(DetectionGroupResponse other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        (
-          Type == other.Type ||
-          Type != null &&
-          Type.Equals(other.Type)
-        ) &&
-        (
-          TypeName == other.TypeName ||
-          TypeName != null &&
-          TypeName.Equals(other.TypeName)
-        ) &&
-        (
-          InvoiceDetailTypePredictions == other.InvoiceDetailTypePredictions ||
-          InvoiceDetailTypePredictions != null &&
-          InvoiceDetailTypePredictions.SequenceEqual(other.InvoiceDetailTypePredictions)
-        );
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class DetectionGroupResponse {\n");
-      sb.Append("  Type: ").Append(Type).Append("\n");
-      sb.Append("  TypeName: ").Append(TypeName).Append("\n");
-      sb.Append("  InvoiceDetailTypePredictions: ").Append(InvoiceDetailTypePredictions).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as DetectionGroupResponse);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (Type != null)
-          hash = hash * 59 + Type.GetHashCode();
-        if (TypeName != null)
-          hash = hash * 59 + TypeName.GetHashCode();
-        if (InvoiceDetailTypePredictions != null)
-          hash = hash * 59 + InvoiceDetailTypePredictions.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }

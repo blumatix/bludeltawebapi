@@ -25,25 +25,48 @@ using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// After processing the container (or after navigating to the next container without saving) the container needs to be unlocked.
+    /// FilterInvoicesRequest
     /// </summary>
     [DataContract]
-    public partial class InvoiceContainerUnlockRequest :  IEquatable<InvoiceContainerUnlockRequest>, IValidatableObject
+    public partial class FilterInvoicesRequest :  IEquatable<FilterInvoicesRequest>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvoiceContainerUnlockRequest" /> class.
+        /// Initializes a new instance of the <see cref="FilterInvoicesRequest" /> class.
         /// </summary>
-        /// <param name="ContainerId">ContainerId.</param>
-        public InvoiceContainerUnlockRequest(string ContainerId = default(string))
+        [JsonConstructorAttribute]
+        protected FilterInvoicesRequest() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FilterInvoicesRequest" /> class.
+        /// </summary>
+        /// <param name="DocumentState">Comma separate list of invoice states (required).</param>
+        /// <param name="SearchText">A text which can be optionally use to restrict invoice search space.</param>
+        public FilterInvoicesRequest(string DocumentState = default(string), string SearchText = default(string))
         {
-            this.ContainerId = ContainerId;
+            // to ensure "DocumentState" is required (not null)
+            if (DocumentState == null)
+            {
+                throw new InvalidDataException("DocumentState is a required property for FilterInvoicesRequest and cannot be null");
+            }
+            else
+            {
+                this.DocumentState = DocumentState;
+            }
+            this.SearchText = SearchText;
         }
         
         /// <summary>
-        /// Gets or Sets ContainerId
+        /// Comma separate list of invoice states
         /// </summary>
-        [DataMember(Name="ContainerId", EmitDefaultValue=false)]
-        public string ContainerId { get; set; }
+        /// <value>Comma separate list of invoice states</value>
+        [DataMember(Name="DocumentState", EmitDefaultValue=false)]
+        public string DocumentState { get; set; }
+
+        /// <summary>
+        /// A text which can be optionally use to restrict invoice search space
+        /// </summary>
+        /// <value>A text which can be optionally use to restrict invoice search space</value>
+        [DataMember(Name="SearchText", EmitDefaultValue=false)]
+        public string SearchText { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -52,8 +75,9 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class InvoiceContainerUnlockRequest {\n");
-            sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
+            sb.Append("class FilterInvoicesRequest {\n");
+            sb.Append("  DocumentState: ").Append(DocumentState).Append("\n");
+            sb.Append("  SearchText: ").Append(SearchText).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -75,15 +99,15 @@ namespace IO.Swagger.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as InvoiceContainerUnlockRequest);
+            return this.Equals(obj as FilterInvoicesRequest);
         }
 
         /// <summary>
-        /// Returns true if InvoiceContainerUnlockRequest instances are equal
+        /// Returns true if FilterInvoicesRequest instances are equal
         /// </summary>
-        /// <param name="other">Instance of InvoiceContainerUnlockRequest to be compared</param>
+        /// <param name="other">Instance of FilterInvoicesRequest to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(InvoiceContainerUnlockRequest other)
+        public bool Equals(FilterInvoicesRequest other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
@@ -91,9 +115,14 @@ namespace IO.Swagger.Model
 
             return 
                 (
-                    this.ContainerId == other.ContainerId ||
-                    this.ContainerId != null &&
-                    this.ContainerId.Equals(other.ContainerId)
+                    this.DocumentState == other.DocumentState ||
+                    this.DocumentState != null &&
+                    this.DocumentState.Equals(other.DocumentState)
+                ) && 
+                (
+                    this.SearchText == other.SearchText ||
+                    this.SearchText != null &&
+                    this.SearchText.Equals(other.SearchText)
                 );
         }
 
@@ -108,8 +137,10 @@ namespace IO.Swagger.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.ContainerId != null)
-                    hash = hash * 59 + this.ContainerId.GetHashCode();
+                if (this.DocumentState != null)
+                    hash = hash * 59 + this.DocumentState.GetHashCode();
+                if (this.SearchText != null)
+                    hash = hash * 59 + this.SearchText.GetHashCode();
                 return hash;
             }
         }

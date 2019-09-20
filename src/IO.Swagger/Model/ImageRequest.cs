@@ -9,123 +9,159 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   Get an image of one page. Either a thumbnail or a high resolution images
-  /// </summary>
-  [DataContract]
-  public class ImageRequest : IEquatable<ImageRequest>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ImageRequest" /> class.
+    /// Get an image of one page. Either a thumbnail or a high resolution images
     /// </summary>
-    [JsonConstructor]
-    protected ImageRequest()
+    [DataContract]
+    public partial class ImageRequest :  IEquatable<ImageRequest>, IValidatableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageRequest" /> class.
+        /// </summary>
+        [JsonConstructorAttribute]
+        protected ImageRequest() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageRequest" /> class.
+        /// </summary>
+        /// <param name="Id">Image id (required).</param>
+        /// <param name="AccessToken">AccessToken (required).</param>
+        public ImageRequest(string Id = default(string), string AccessToken = default(string))
+        {
+            // to ensure "Id" is required (not null)
+            if (Id == null)
+            {
+                throw new InvalidDataException("Id is a required property for ImageRequest and cannot be null");
+            }
+            else
+            {
+                this.Id = Id;
+            }
+            // to ensure "AccessToken" is required (not null)
+            if (AccessToken == null)
+            {
+                throw new InvalidDataException("AccessToken is a required property for ImageRequest and cannot be null");
+            }
+            else
+            {
+                this.AccessToken = AccessToken;
+            }
+        }
+        
+        /// <summary>
+        /// Image id
+        /// </summary>
+        /// <value>Image id</value>
+        [DataMember(Name="Id", EmitDefaultValue=false)]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// AccessToken
+        /// </summary>
+        /// <value>AccessToken</value>
+        [DataMember(Name="AccessToken", EmitDefaultValue=false)]
+        public string AccessToken { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class ImageRequest {\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  AccessToken: ").Append(AccessToken).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ImageRequest);
+        }
+
+        /// <summary>
+        /// Returns true if ImageRequest instances are equal
+        /// </summary>
+        /// <param name="other">Instance of ImageRequest to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(ImageRequest other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
+                ) && 
+                (
+                    this.AccessToken == other.AccessToken ||
+                    this.AccessToken != null &&
+                    this.AccessToken.Equals(other.AccessToken)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.Id != null)
+                    hash = hash * 59 + this.Id.GetHashCode();
+                if (this.AccessToken != null)
+                    hash = hash * 59 + this.AccessToken.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="ImageRequest" /> class.
-    /// </summary>
-    /// <param name="Id">Image id (required).</param>
-    public ImageRequest(string Id = default(string))
-    {
-      // to ensure "Id" is required (not null)
-      if (Id == null)
-        throw new InvalidDataException("Id is a required property for ImageRequest and cannot be null");
-      this.Id = Id;
-    }
-
-    /// <summary>
-    ///   Image id
-    /// </summary>
-    /// <value>Image id</value>
-    [DataMember(Name = "Id", EmitDefaultValue = false)]
-    public string Id { get; set; }
-
-    /// <summary>
-    ///   Returns true if ImageRequest instances are equal
-    /// </summary>
-    /// <param name="other">Instance of ImageRequest to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(ImageRequest other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        Id == other.Id ||
-        Id != null &&
-        Id.Equals(other.Id);
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class ImageRequest {\n");
-      sb.Append("  Id: ").Append(Id).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as ImageRequest);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (Id != null)
-          hash = hash * 59 + Id.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }

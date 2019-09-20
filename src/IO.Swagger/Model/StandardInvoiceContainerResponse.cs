@@ -25,35 +25,75 @@ using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// UploadInvoiceContainerResponse
+    /// StandardInvoiceContainerResponse
     /// </summary>
     [DataContract]
-    public partial class UploadInvoiceContainerResponse :  IEquatable<UploadInvoiceContainerResponse>, IValidatableObject
+    public partial class StandardInvoiceContainerResponse :  IEquatable<StandardInvoiceContainerResponse>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UploadInvoiceContainerResponse" /> class.
+        /// Initializes a new instance of the <see cref="StandardInvoiceContainerResponse" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected UploadInvoiceContainerResponse() { }
+        protected StandardInvoiceContainerResponse() { }
         /// <summary>
-        /// Initializes a new instance of the <see cref="UploadInvoiceContainerResponse" /> class.
+        /// Initializes a new instance of the <see cref="StandardInvoiceContainerResponse" /> class.
         /// </summary>
+        /// <param name="From">From.</param>
+        /// <param name="To">To.</param>
+        /// <param name="InvoiceContainers">InvoiceContainers.</param>
+        /// <param name="Created">Created.</param>
+        /// <param name="CreatedBy">CreatedBy.</param>
         /// <param name="State">0 &#x3D; Ok, 1 &#x3D; Failed (required).</param>
         /// <param name="Message">Error message in case of an error.</param>
-        public UploadInvoiceContainerResponse(int? State = default(int?), string Message = default(string))
+        public StandardInvoiceContainerResponse(DateTime? From = default(DateTime?), DateTime? To = default(DateTime?), List<InvoiceContainer> InvoiceContainers = default(List<InvoiceContainer>), DateTime? Created = default(DateTime?), string CreatedBy = default(string), int? State = default(int?), string Message = default(string))
         {
             // to ensure "State" is required (not null)
             if (State == null)
             {
-                throw new InvalidDataException("State is a required property for UploadInvoiceContainerResponse and cannot be null");
+                throw new InvalidDataException("State is a required property for StandardInvoiceContainerResponse and cannot be null");
             }
             else
             {
                 this.State = State;
             }
+            this.From = From;
+            this.To = To;
+            this.InvoiceContainers = InvoiceContainers;
+            this.Created = Created;
+            this.CreatedBy = CreatedBy;
             this.Message = Message;
         }
         
+        /// <summary>
+        /// Gets or Sets From
+        /// </summary>
+        [DataMember(Name="From", EmitDefaultValue=false)]
+        public DateTime? From { get; set; }
+
+        /// <summary>
+        /// Gets or Sets To
+        /// </summary>
+        [DataMember(Name="To", EmitDefaultValue=false)]
+        public DateTime? To { get; set; }
+
+        /// <summary>
+        /// Gets or Sets InvoiceContainers
+        /// </summary>
+        [DataMember(Name="InvoiceContainers", EmitDefaultValue=false)]
+        public List<InvoiceContainer> InvoiceContainers { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Created
+        /// </summary>
+        [DataMember(Name="Created", EmitDefaultValue=false)]
+        public DateTime? Created { get; set; }
+
+        /// <summary>
+        /// Gets or Sets CreatedBy
+        /// </summary>
+        [DataMember(Name="CreatedBy", EmitDefaultValue=false)]
+        public string CreatedBy { get; set; }
+
         /// <summary>
         /// 0 &#x3D; Ok, 1 &#x3D; Failed
         /// </summary>
@@ -75,7 +115,12 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class UploadInvoiceContainerResponse {\n");
+            sb.Append("class StandardInvoiceContainerResponse {\n");
+            sb.Append("  From: ").Append(From).Append("\n");
+            sb.Append("  To: ").Append(To).Append("\n");
+            sb.Append("  InvoiceContainers: ").Append(InvoiceContainers).Append("\n");
+            sb.Append("  Created: ").Append(Created).Append("\n");
+            sb.Append("  CreatedBy: ").Append(CreatedBy).Append("\n");
             sb.Append("  State: ").Append(State).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
@@ -99,21 +144,46 @@ namespace IO.Swagger.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as UploadInvoiceContainerResponse);
+            return this.Equals(obj as StandardInvoiceContainerResponse);
         }
 
         /// <summary>
-        /// Returns true if UploadInvoiceContainerResponse instances are equal
+        /// Returns true if StandardInvoiceContainerResponse instances are equal
         /// </summary>
-        /// <param name="other">Instance of UploadInvoiceContainerResponse to be compared</param>
+        /// <param name="other">Instance of StandardInvoiceContainerResponse to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(UploadInvoiceContainerResponse other)
+        public bool Equals(StandardInvoiceContainerResponse other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
                 return false;
 
             return 
+                (
+                    this.From == other.From ||
+                    this.From != null &&
+                    this.From.Equals(other.From)
+                ) && 
+                (
+                    this.To == other.To ||
+                    this.To != null &&
+                    this.To.Equals(other.To)
+                ) && 
+                (
+                    this.InvoiceContainers == other.InvoiceContainers ||
+                    this.InvoiceContainers != null &&
+                    this.InvoiceContainers.SequenceEqual(other.InvoiceContainers)
+                ) && 
+                (
+                    this.Created == other.Created ||
+                    this.Created != null &&
+                    this.Created.Equals(other.Created)
+                ) && 
+                (
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
+                ) && 
                 (
                     this.State == other.State ||
                     this.State != null &&
@@ -137,6 +207,16 @@ namespace IO.Swagger.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
+                if (this.From != null)
+                    hash = hash * 59 + this.From.GetHashCode();
+                if (this.To != null)
+                    hash = hash * 59 + this.To.GetHashCode();
+                if (this.InvoiceContainers != null)
+                    hash = hash * 59 + this.InvoiceContainers.GetHashCode();
+                if (this.Created != null)
+                    hash = hash * 59 + this.Created.GetHashCode();
+                if (this.CreatedBy != null)
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
                 if (this.State != null)
                     hash = hash * 59 + this.State.GetHashCode();
                 if (this.Message != null)

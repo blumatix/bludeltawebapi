@@ -9,179 +9,200 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.Serialization;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   InvoiceContainer
-  /// </summary>
-  [DataContract]
-  public class InvoiceContainer : IEquatable<InvoiceContainer>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="InvoiceContainer" /> class.
+    /// InvoiceContainer
     /// </summary>
-    /// <param name="ContainerId">ContainerId.</param>
-    /// <param name="Name">Name.</param>
-    /// <param name="Invoices">Invoices.</param>
-    /// <param name="Created">Created.</param>
-    /// <param name="CreatedBy">CreatedBy.</param>
-    public InvoiceContainer(string ContainerId = default(string), string Name = default(string),
-      List<Invoice> Invoices = default(List<Invoice>), DateTime? Created = default(DateTime?),
-      string CreatedBy = default(string))
+    [DataContract]
+    public partial class InvoiceContainer :  IEquatable<InvoiceContainer>, IValidatableObject
     {
-      this.ContainerId = ContainerId;
-      this.Name = Name;
-      this.Invoices = Invoices;
-      this.Created = Created;
-      this.CreatedBy = CreatedBy;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvoiceContainer" /> class.
+        /// </summary>
+        /// <param name="ContainerId">ContainerId.</param>
+        /// <param name="Name">Name.</param>
+        /// <param name="Invoices">Invoices.</param>
+        /// <param name="Created">Created.</param>
+        /// <param name="CreatedBy">CreatedBy.</param>
+        /// <param name="IsLocked">IsLocked.</param>
+        public InvoiceContainer(string ContainerId = default(string), string Name = default(string), List<Invoice> Invoices = default(List<Invoice>), DateTime? Created = default(DateTime?), string CreatedBy = default(string), bool? IsLocked = default(bool?))
+        {
+            this.ContainerId = ContainerId;
+            this.Name = Name;
+            this.Invoices = Invoices;
+            this.Created = Created;
+            this.CreatedBy = CreatedBy;
+            this.IsLocked = IsLocked;
+        }
+        
+        /// <summary>
+        /// Gets or Sets ContainerId
+        /// </summary>
+        [DataMember(Name="ContainerId", EmitDefaultValue=false)]
+        public string ContainerId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Name
+        /// </summary>
+        [DataMember(Name="Name", EmitDefaultValue=false)]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Invoices
+        /// </summary>
+        [DataMember(Name="Invoices", EmitDefaultValue=false)]
+        public List<Invoice> Invoices { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Created
+        /// </summary>
+        [DataMember(Name="Created", EmitDefaultValue=false)]
+        public DateTime? Created { get; set; }
+
+        /// <summary>
+        /// Gets or Sets CreatedBy
+        /// </summary>
+        [DataMember(Name="CreatedBy", EmitDefaultValue=false)]
+        public string CreatedBy { get; set; }
+
+        /// <summary>
+        /// Gets or Sets IsLocked
+        /// </summary>
+        [DataMember(Name="IsLocked", EmitDefaultValue=false)]
+        public bool? IsLocked { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class InvoiceContainer {\n");
+            sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Invoices: ").Append(Invoices).Append("\n");
+            sb.Append("  Created: ").Append(Created).Append("\n");
+            sb.Append("  CreatedBy: ").Append(CreatedBy).Append("\n");
+            sb.Append("  IsLocked: ").Append(IsLocked).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as InvoiceContainer);
+        }
+
+        /// <summary>
+        /// Returns true if InvoiceContainer instances are equal
+        /// </summary>
+        /// <param name="other">Instance of InvoiceContainer to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(InvoiceContainer other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.ContainerId == other.ContainerId ||
+                    this.ContainerId != null &&
+                    this.ContainerId.Equals(other.ContainerId)
+                ) && 
+                (
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
+                ) && 
+                (
+                    this.Invoices == other.Invoices ||
+                    this.Invoices != null &&
+                    this.Invoices.SequenceEqual(other.Invoices)
+                ) && 
+                (
+                    this.Created == other.Created ||
+                    this.Created != null &&
+                    this.Created.Equals(other.Created)
+                ) && 
+                (
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
+                ) && 
+                (
+                    this.IsLocked == other.IsLocked ||
+                    this.IsLocked != null &&
+                    this.IsLocked.Equals(other.IsLocked)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.ContainerId != null)
+                    hash = hash * 59 + this.ContainerId.GetHashCode();
+                if (this.Name != null)
+                    hash = hash * 59 + this.Name.GetHashCode();
+                if (this.Invoices != null)
+                    hash = hash * 59 + this.Invoices.GetHashCode();
+                if (this.Created != null)
+                    hash = hash * 59 + this.Created.GetHashCode();
+                if (this.CreatedBy != null)
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
+                if (this.IsLocked != null)
+                    hash = hash * 59 + this.IsLocked.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   Gets or Sets ContainerId
-    /// </summary>
-    [DataMember(Name = "ContainerId", EmitDefaultValue = false)]
-    public string ContainerId { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets Name
-    /// </summary>
-    [DataMember(Name = "Name", EmitDefaultValue = false)]
-    public string Name { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets Invoices
-    /// </summary>
-    [DataMember(Name = "Invoices", EmitDefaultValue = false)]
-    public List<Invoice> Invoices { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets Created
-    /// </summary>
-    [DataMember(Name = "Created", EmitDefaultValue = false)]
-    public DateTime? Created { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets CreatedBy
-    /// </summary>
-    [DataMember(Name = "CreatedBy", EmitDefaultValue = false)]
-    public string CreatedBy { get; set; }
-
-    /// <summary>
-    ///   Returns true if InvoiceContainer instances are equal
-    /// </summary>
-    /// <param name="other">Instance of InvoiceContainer to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(InvoiceContainer other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        (
-          ContainerId == other.ContainerId ||
-          ContainerId != null &&
-          ContainerId.Equals(other.ContainerId)
-        ) &&
-        (
-          Name == other.Name ||
-          Name != null &&
-          Name.Equals(other.Name)
-        ) &&
-        (
-          Invoices == other.Invoices ||
-          Invoices != null &&
-          Invoices.SequenceEqual(other.Invoices)
-        ) &&
-        (
-          Created == other.Created ||
-          Created != null &&
-          Created.Equals(other.Created)
-        ) &&
-        (
-          CreatedBy == other.CreatedBy ||
-          CreatedBy != null &&
-          CreatedBy.Equals(other.CreatedBy)
-        );
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class InvoiceContainer {\n");
-      sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
-      sb.Append("  Name: ").Append(Name).Append("\n");
-      sb.Append("  Invoices: ").Append(Invoices).Append("\n");
-      sb.Append("  Created: ").Append(Created).Append("\n");
-      sb.Append("  CreatedBy: ").Append(CreatedBy).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as InvoiceContainer);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (ContainerId != null)
-          hash = hash * 59 + ContainerId.GetHashCode();
-        if (Name != null)
-          hash = hash * 59 + Name.GetHashCode();
-        if (Invoices != null)
-          hash = hash * 59 + Invoices.GetHashCode();
-        if (Created != null)
-          hash = hash * 59 + Created.GetHashCode();
-        if (CreatedBy != null)
-          hash = hash * 59 + CreatedBy.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }

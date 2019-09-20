@@ -25,23 +25,37 @@ using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// After processing the container (or after navigating to the next container without saving) the container needs to be unlocked.
+    /// InvoiceContainerDeleteRequest
     /// </summary>
     [DataContract]
-    public partial class InvoiceContainerUnlockRequest :  IEquatable<InvoiceContainerUnlockRequest>, IValidatableObject
+    public partial class InvoiceContainerDeleteRequest :  IEquatable<InvoiceContainerDeleteRequest>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvoiceContainerUnlockRequest" /> class.
+        /// Initializes a new instance of the <see cref="InvoiceContainerDeleteRequest" /> class.
         /// </summary>
-        /// <param name="ContainerId">ContainerId.</param>
-        public InvoiceContainerUnlockRequest(string ContainerId = default(string))
+        [JsonConstructorAttribute]
+        protected InvoiceContainerDeleteRequest() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvoiceContainerDeleteRequest" /> class.
+        /// </summary>
+        /// <param name="ContainerId">Id of the container (required).</param>
+        public InvoiceContainerDeleteRequest(string ContainerId = default(string))
         {
-            this.ContainerId = ContainerId;
+            // to ensure "ContainerId" is required (not null)
+            if (ContainerId == null)
+            {
+                throw new InvalidDataException("ContainerId is a required property for InvoiceContainerDeleteRequest and cannot be null");
+            }
+            else
+            {
+                this.ContainerId = ContainerId;
+            }
         }
         
         /// <summary>
-        /// Gets or Sets ContainerId
+        /// Id of the container
         /// </summary>
+        /// <value>Id of the container</value>
         [DataMember(Name="ContainerId", EmitDefaultValue=false)]
         public string ContainerId { get; set; }
 
@@ -52,7 +66,7 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class InvoiceContainerUnlockRequest {\n");
+            sb.Append("class InvoiceContainerDeleteRequest {\n");
             sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -75,15 +89,15 @@ namespace IO.Swagger.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as InvoiceContainerUnlockRequest);
+            return this.Equals(obj as InvoiceContainerDeleteRequest);
         }
 
         /// <summary>
-        /// Returns true if InvoiceContainerUnlockRequest instances are equal
+        /// Returns true if InvoiceContainerDeleteRequest instances are equal
         /// </summary>
-        /// <param name="other">Instance of InvoiceContainerUnlockRequest to be compared</param>
+        /// <param name="other">Instance of InvoiceContainerDeleteRequest to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(InvoiceContainerUnlockRequest other)
+        public bool Equals(InvoiceContainerDeleteRequest other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)

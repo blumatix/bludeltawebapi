@@ -9,145 +9,168 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+using System.Linq;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
-  /// <summary>
-  ///   Upload an InvoiceContainer
-  /// </summary>
-  [DataContract]
-  public class UploadInvoiceContainerRequest : IEquatable<UploadInvoiceContainerRequest>, IValidatableObject
-  {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="UploadInvoiceContainerRequest" /> class.
+    /// Upload an InvoiceContainer
     /// </summary>
-    /// <param name="Name">Name.</param>
-    /// <param name="Description">Description.</param>
-    /// <param name="File">File.</param>
-    public UploadInvoiceContainerRequest(string Name = default(string), string Description = default(string),
-      string File = default(string))
+    [DataContract]
+    public partial class UploadInvoiceContainerRequest :  IEquatable<UploadInvoiceContainerRequest>, IValidatableObject
     {
-      this.Name = Name;
-      this.Description = Description;
-      this.File = File;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UploadInvoiceContainerRequest" /> class.
+        /// </summary>
+        /// <param name="Name">Name.</param>
+        /// <param name="Description">Description.</param>
+        /// <param name="File">File.</param>
+        /// <param name="FileName">FileName.</param>
+        public UploadInvoiceContainerRequest(string Name = default(string), string Description = default(string), string File = default(string), string FileName = default(string))
+        {
+            this.Name = Name;
+            this.Description = Description;
+            this.File = File;
+            this.FileName = FileName;
+        }
+        
+        /// <summary>
+        /// Gets or Sets Name
+        /// </summary>
+        [DataMember(Name="Name", EmitDefaultValue=false)]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Description
+        /// </summary>
+        [DataMember(Name="Description", EmitDefaultValue=false)]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or Sets File
+        /// </summary>
+        [DataMember(Name="File", EmitDefaultValue=false)]
+        public string File { get; set; }
+
+        /// <summary>
+        /// Gets or Sets FileName
+        /// </summary>
+        [DataMember(Name="FileName", EmitDefaultValue=false)]
+        public string FileName { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class UploadInvoiceContainerRequest {\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  File: ").Append(File).Append("\n");
+            sb.Append("  FileName: ").Append(FileName).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+  
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as UploadInvoiceContainerRequest);
+        }
+
+        /// <summary>
+        /// Returns true if UploadInvoiceContainerRequest instances are equal
+        /// </summary>
+        /// <param name="other">Instance of UploadInvoiceContainerRequest to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(UploadInvoiceContainerRequest other)
+        {
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
+                return false;
+
+            return 
+                (
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
+                ) && 
+                (
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
+                ) && 
+                (
+                    this.File == other.File ||
+                    this.File != null &&
+                    this.File.Equals(other.File)
+                ) && 
+                (
+                    this.FileName == other.FileName ||
+                    this.FileName != null &&
+                    this.FileName.Equals(other.FileName)
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            // credit: http://stackoverflow.com/a/263416/677735
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.Name != null)
+                    hash = hash * 59 + this.Name.GetHashCode();
+                if (this.Description != null)
+                    hash = hash * 59 + this.Description.GetHashCode();
+                if (this.File != null)
+                    hash = hash * 59 + this.File.GetHashCode();
+                if (this.FileName != null)
+                    hash = hash * 59 + this.FileName.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
     }
 
-    /// <summary>
-    ///   Gets or Sets Name
-    /// </summary>
-    [DataMember(Name = "Name", EmitDefaultValue = false)]
-    public string Name { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets Description
-    /// </summary>
-    [DataMember(Name = "Description", EmitDefaultValue = false)]
-    public string Description { get; set; }
-
-    /// <summary>
-    ///   Gets or Sets File
-    /// </summary>
-    [DataMember(Name = "File", EmitDefaultValue = false)]
-    public string File { get; set; }
-
-    /// <summary>
-    ///   Returns true if UploadInvoiceContainerRequest instances are equal
-    /// </summary>
-    /// <param name="other">Instance of UploadInvoiceContainerRequest to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(UploadInvoiceContainerRequest other)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      if (other == null)
-        return false;
-
-      return
-        (
-          Name == other.Name ||
-          Name != null &&
-          Name.Equals(other.Name)
-        ) &&
-        (
-          Description == other.Description ||
-          Description != null &&
-          Description.Equals(other.Description)
-        ) &&
-        (
-          File == other.File ||
-          File != null &&
-          File.Equals(other.File)
-        );
-    }
-
-    /// <summary>
-    ///   To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
-
-    /// <summary>
-    ///   Returns the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()
-    {
-      var sb = new StringBuilder();
-      sb.Append("class UploadInvoiceContainerRequest {\n");
-      sb.Append("  Name: ").Append(Name).Append("\n");
-      sb.Append("  Description: ").Append(Description).Append("\n");
-      sb.Append("  File: ").Append(File).Append("\n");
-      sb.Append("}\n");
-      return sb.ToString();
-    }
-
-    /// <summary>
-    ///   Returns the JSON string presentation of the object
-    /// </summary>
-    /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
-    {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
-    }
-
-    /// <summary>
-    ///   Returns true if objects are equal
-    /// </summary>
-    /// <param name="obj">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object obj)
-    {
-      // credit: http://stackoverflow.com/a/10454552/677735
-      return Equals(obj as UploadInvoiceContainerRequest);
-    }
-
-    /// <summary>
-    ///   Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      // credit: http://stackoverflow.com/a/263416/677735
-      unchecked // Overflow is fine, just wrap
-      {
-        var hash = 41;
-        // Suitable nullity checks etc, of course :)
-        if (Name != null)
-          hash = hash * 59 + Name.GetHashCode();
-        if (Description != null)
-          hash = hash * 59 + Description.GetHashCode();
-        if (File != null)
-          hash = hash * 59 + File.GetHashCode();
-        return hash;
-      }
-    }
-  }
 }
