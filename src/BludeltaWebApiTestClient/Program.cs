@@ -25,12 +25,14 @@ namespace BludeltaWebApiTestClient
                 invoice = options.Invoice;
             }
 
-            var config = new Configuration(new ApiClient("http://bludelta-alpha-staging.azurewebsites.net/"));
+            //var config = new Configuration(new ApiClient("http://bludelta-alpha-staging.azurewebsites.net/"));
+            var config = new Configuration(new ApiClient("http://localhost:8060"));
             config.DefaultHeader.Add("X-ApiKey","testtoken");
 
             // CreateAccessToken
             var accessToken = CreateAccessToken(config);
 
+            config = new Configuration(new ApiClient("http://localhost:8060"));
             config.DefaultHeader.Add("X-AccessToken", accessToken);
 
             // Get number of validatable invoices
@@ -43,12 +45,14 @@ namespace BludeltaWebApiTestClient
             var invoiceTuple = ImportNextInvoice(config);
 
             // Confirm an invoice
+            // NOTE: please replace InvoiceId with a real one.
+            var confirmableInvoiceId = Guid.Parse("667EA5E7-960C-4999-8348-650B350C1982");
             var isConfirmed = ConfirmInvoice("667EA5E7-960C-4999-8348-650B350C1982", config);
 
             // Upload File
             if (File.Exists(invoice))
             {
-                UploadInvoiceContainer(invoice);
+                UploadInvoiceContainer(invoice, config);
             }
 
             Console.WriteLine("Press any key to exit...");
@@ -69,7 +73,8 @@ namespace BludeltaWebApiTestClient
             {
                 Name = "MyInvoice",
                 Description = description,
-                File = invoiceB64
+                File = invoiceB64,
+                FileName = "Invoice1.pdf"
             };
 
             var result = uploadApi.UploadInvoiceContainer(request);

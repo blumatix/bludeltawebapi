@@ -58,7 +58,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of CountedInvoicesResponse</returns>
         public ApiResponse< CountedInvoicesResponse > CountInvoicesRequestinvoicesStateGetWithHttpInfo (CountInvoicesRequest request)
         {
-            var localVarPath = "/count/invoices/{State}";
+            var localVarPath = "/count/invoices";
             var localVarPathParams = new Dictionary<string, string>();
             var localVarQueryParams = new Dictionary<string, string>();
             var localVarHeaderParams = new Dictionary<string, string>(Configuration.DefaultHeader);
@@ -76,8 +76,7 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            localVarPathParams.Add("State", Configuration.ApiClient.ParameterToString(request.State)); // path parameter
-
+            SetParameters(request, localVarQueryParams);
 
             // make the HTTP request
             var localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
@@ -137,7 +136,7 @@ namespace IO.Swagger.Api
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
             }
 
-            localVarPathParams.Add("State", Configuration.ApiClient.ParameterToString(request.State)); // path parameter
+            SetParameters(request, localVarQueryParams);
 
             // make the HTTP request
             var localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
@@ -155,6 +154,11 @@ namespace IO.Swagger.Api
             return new ApiResponse<CountedInvoicesResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (CountedInvoicesResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(CountedInvoicesResponse)));
+        }
+
+        private void SetParameters(CountInvoicesRequest request, Dictionary<string, string> localVarQueryParams)
+        {
+            localVarQueryParams.Add("State", Configuration.ApiClient.ParameterToString(request.State));
         }
 
     }
