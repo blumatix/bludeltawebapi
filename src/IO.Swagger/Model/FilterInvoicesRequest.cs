@@ -69,6 +69,12 @@ namespace IO.Swagger.Model
         public string SearchText { get; set; }
 
         /// <summary>
+        /// Specify if response should contain DetectInvocieResponse, default is value is false.
+        /// </summary>
+        [DataMember(Name = "IncludeDetectInvoiceResponse", EmitDefaultValue = false)]
+        public bool IncludeDetectInvoiceResponse { get; set; } = false;
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -78,6 +84,7 @@ namespace IO.Swagger.Model
             sb.Append("class FilterInvoicesRequest {\n");
             sb.Append("  DocumentState: ").Append(DocumentState).Append("\n");
             sb.Append("  SearchText: ").Append(SearchText).Append("\n");
+            sb.Append("  IncludeDetectInvoiceResonse: ").Append(SearchText).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

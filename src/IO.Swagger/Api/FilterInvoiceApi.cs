@@ -219,11 +219,16 @@ namespace IO.Swagger.Api
         private void SetParameters(FilterInvoicesRequest request, Dictionary<string, string> localVarQueryParams)
         {
             if (request.DocumentState != null)
-                localVarQueryParams.Add("DocumentState",
-                    Configuration.ApiClient.ParameterToString(request.DocumentState)); // query parameter
+            {
+                localVarQueryParams.Add("DocumentState", Configuration.ApiClient.ParameterToString(request.DocumentState)); 
+            }
+
             if (request.SearchText != null)
-                localVarQueryParams.Add("SearchText",
-                    Configuration.ApiClient.ParameterToString(request.SearchText)); // query parameter
+            {
+                localVarQueryParams.Add("SearchText", Configuration.ApiClient.ParameterToString(request.SearchText)); 
+            }
+
+            localVarQueryParams.Add("IncludeDetectInvoiceResponse", Configuration.ApiClient.ParameterToString(request.IncludeDetectInvoiceResponse));
         }
     }
 }

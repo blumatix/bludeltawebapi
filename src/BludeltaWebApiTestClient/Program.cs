@@ -25,7 +25,7 @@ namespace BludeltaWebApiTestClient
                 invoice = options.Invoice;
             }
 
-            var config = new Configuration(new ApiClient("http://localhost:8060"));
+            var config = new Configuration(new ApiClient("http://bludelta-alpha-staging.azurewebsites.net/"));
             config.DefaultHeader.Add("X-ApiKey","testtoken");
 
             // CreateAccessToken
