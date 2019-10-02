@@ -76,12 +76,14 @@ namespace IO.Swagger.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "http://bludelta-alpha.azurewebsites.net")
+        public ApiClient(String basePath = "http://bludelta-alpha.azurewebsites.net", IWebProxy proxy = null)
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
 
             RestClient = new RestClient(basePath);
+            if (proxy != null)
+                RestClient.Proxy = proxy;
             Configuration = Configuration.Default;
         }
 
