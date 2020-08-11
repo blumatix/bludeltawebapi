@@ -1,3 +1,5 @@
+# DEPRECATED - DO NOT CHECKOUT THIS CODE!!!!!!
+
 # C# client for the BludeltaWebServiceAPI 
 
 <a name="dependencies"></a>
